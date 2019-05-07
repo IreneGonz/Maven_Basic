@@ -127,11 +127,43 @@ public class Programame2 {
 				// conexHab haya
 				// Filas - Columnas
 				String habitacionesConectadas[] = new String[conexHab * 2];
-				System.out.println(habitacionesConectadas.length);
-				for (int i = 0; i < conexHab; i++) {
-					habitacionesConectadas = entrada.get(datoActual).split(" ");
+				
+				String conexiones2[] = new String [conexHab * 2];
+				// Es *2 porque siempre va a ser par
+				// System.out.println(conexiones2.length);
+				String[] aux;
+				datoActual++;
+				// System.out.println(entrada.get(datoActual));
+
+				for (int i = 0; i < conexiones2.length; i++) {
+
+					// Los meto aquí con el split y después si quiero lo meto en conexiones[][] más
+					// bonito
+					conexiones2 = entrada.get(datoActual).split(" ");
+					// datoActual++;
+					// Esto de arriba no estaría del todo bien, llegaría un punto en el que te
+					// quedarías sin datos
+					// Igual se podria hacer que si se puede hacer split(" ") que sume datoActual,
+					// y si no no?
+					// Esto de abajo no servirña porque si no hay espacios no se hara el split, se
+					// guardará el string tal cual
+					// if (entrada.get(datoActual).split(" ") != null)
+					// Así funciona bien (o por lo menos mejor)
+					if (entrada.get(datoActual).contains(" ")) {
+						datoActual++;
+					}
 				}
-				casoActual++;
+				// System.out.println(entrada.get(datoActual));
+
+				// Aqui...que queria hacer?
+				// aux = entrada.get(datoActual).split(" ");
+				// for (int i = 0; i < aux.length; i++) {
+				// // System.out.println(aux[i]);
+				// }
+
+				// Los pasos pueden ir separados por comas o ser un unico numero
+
+				casoActual++; // Igual esto no hace falta? Pues si, si no peta
 			}
 		}
 
