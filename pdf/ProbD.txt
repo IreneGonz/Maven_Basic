@@ -1,0 +1,37 @@
+3 casos de prueba
+
+2 habitaciones
+1 Cconexion entre habitaciones
+1 2 posibilidad ir hab 1-2
+2 va de hab 1 a la 2
+VICTORIA
+
+3 habitaciones(?)
+1 Cconexion entre habitaciones
+1 2 posibilidad ir hab 1-2
+2,3 movimientos a realizar
+GAME OVER
+
+5 habitaciones
+2 conexiones entre habitaciones
+1 2 posibilidad ir hab 1-2
+3 2 posibilidad ir hab 3-2/2-3
+2,3 movimientos a realizar
+PERDIDO porque no llegas al final del laberinto
+
+
+N nº casos de prueba
+H nº de habitaciones
+Si no llegas a la hab H-> !victoria
+linea C con nº conexiones entre habitaciones
+C lineas indicando las conexiones entre habitaciones
+1 linea de num indicando los movimientos (minimo 1 paso)
+
+GAME OVER
+Si intentas ir de una hab A a una B sin estar conectadas
+
+PERDIDO
+Si no llegasa la hab final (y no se cumple el GAME OVER)
+
+VICTORIA
+Si llegas a la hab final obviamente sin haber muerto (GAME OVER)

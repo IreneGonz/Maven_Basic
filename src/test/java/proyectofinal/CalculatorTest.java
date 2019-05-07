@@ -20,7 +20,7 @@ class CalculatorTest {
 
 	@BeforeAll
 	static void init() throws Exception {
-		System.out.println("me ejectuto una vez");
+		System.out.println("me ejecuto una vez");
 	}
 
 	@AfterAll
@@ -42,11 +42,8 @@ class CalculatorTest {
 	@Test
 	void testSumTwoNumbers() {
 
-		assertEquals("El test ha fallado,"
-				+ " el resultado no es 7"
-				, 7, calc.sum(2, 5));
-		assertEquals("El test ha fallado,"
-				+ " el resultado no es 13", 13, calc.sum(5, 8));
+		assertEquals("El test ha fallado," + " el resultado no es 7", 7, calc.sum(2, 5));
+		assertEquals("El test ha fallado," + " el resultado no es 13", 13, calc.sum(5, 8));
 	}
 
 	@Test
