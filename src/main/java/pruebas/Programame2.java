@@ -115,6 +115,24 @@ public class Programame2 {
 
 		if (!entrada.isEmpty()) {
 			int totalCasos = Integer.parseInt(entrada.get(0));
+			int casoActual = 0;
+			int datoActual = 1;
+			while (casoActual < totalCasos) {
+				// Solo hay 1 linea con habitaciones
+				int habitaciones = Integer.parseInt(entrada.get(datoActual));
+				datoActual++;
+				// Linea con el numero de conexiones que hay entre habitaciones
+				int conexHab = Integer.parseInt(entrada.get(datoActual));
+				// foreach recorriendo tantas lineas de conexiones entre habitaciones como
+				// conexHab haya
+				// Filas - Columnas
+				String habitacionesConectadas[] = new String[conexHab * 2];
+				System.out.println(habitacionesConectadas.length);
+				for (int i = 0; i < conexHab; i++) {
+					habitacionesConectadas = entrada.get(datoActual).split(" ");
+				}
+				casoActual++;
+			}
 		}
 
 		System.out.println(salida);
