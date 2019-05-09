@@ -7,13 +7,13 @@ import java.util.List;
 public class Programame2 {
 
 	public static void main(String[] args) {
-		// No peta pero esta mal el caso de prueba (no es 12 sino 1 2)
+		// No peta pero y el caso de prueba esta bien
 		problemaD2(new ArrayList<>(
 				Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")));
 		
-		// Peta pero el caso de prueba esta bien
-
-		// problemaD(new ArrayList<>(
+		// Peta y el caso de prueba esta mal, tendre que conseguir que esto NO devuelva
+		// nada
+		// problemaD2(new ArrayList<>(
 		// Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1
 		// 2", "3 2", "2,3")));
 
@@ -36,6 +36,8 @@ public class Programame2 {
 		System.out.println(entrada);
 
 		if (!entrada.isEmpty()) {
+			// Primero llamar a un metodo que compruebe que hay suficientes datos y que
+			// todos estan correctos
 			int totalCasos = Integer.parseInt(entrada.get(0));
 			int casoActual = 0; // Lo dejo como 0 o como 1? Si lo pongo como 1 en el while sera <=
 			int datoActual = 1;
@@ -64,18 +66,18 @@ public class Programame2 {
 				int habitacionesConectadas[][] = new int[conexionesEntreHabitaciones][2];
 				for (int i = 0, x = 0; i < habitacionesConectadas.length; i++) {
 					for (int j = 0; j < habitacionesConectadas[i].length; j++) {
-						if (casoActual == 1) {
-						}
 						habitacionesConectadas[i][j] = Integer.parseInt(aux.get(x));
 						x++;
 					}
 				}
+				// Esto se puede borrar, es solo para imprimirmelo por pantalla
 				List<Integer> habsConec = new ArrayList<Integer>();
 				for (int i = 0; i < habitacionesConectadas.length; i++) {
 					for (int j = 0; j < habitacionesConectadas[i].length; j++) {
 						habsConec.add(habitacionesConectadas[i][j]);
 					}
-				}
+				} // Esto se puede borrar, es solo para imprimirmelo por pantalla
+
 				// Aquí compruebo que se guardan bien las habitaciones conectadas en plan:
 				// 1 2 La habitacion 1 esta conectada con la 2
 				// 3 4 La habitacion 3 esta conectada con la 4
@@ -92,6 +94,9 @@ public class Programame2 {
 					pasos.add(Integer.parseInt(pAux[i]));
 				}
 				datoActual++;
+				// Comprobar si GAME OVER, PERDIDO, VICTORIA
+				
+				comprobarGameOver(habitacionesConectadas, pasos, salida);
 
 
 				System.out.println("Habitaciones: " + habitaciones + " Num conexiones: " + conexionesEntreHabitaciones
@@ -103,6 +108,43 @@ public class Programame2 {
 
 		System.out.println(salida);
 		return salida;
+	}
+
+	public static void comprobarGameOver(int[][] habitacionesConectadas, List<Integer> pasos, ArrayList salida) {
+		boolean pierdes = false;
+		// TODO Auto-generated method stub
+		// Pierdes si pasas entre 2 habs que no estan conectadas
+		int habitacionesPasadas[] = new int[pasos.size()];
+		// Hago tantos int n1, n2 y asi como pasos.size(), y cargo cada n1 n2 con el
+		// contenido de pasos.size().get(elQueSea)
+		for (int i = 0; i < pasos.size(); i++) {
+			habitacionesPasadas[i] = pasos.get(i);
+		}
+		// Tengo que comparar la habitacion actual con la siguiente para saber de que
+		// habitacion a cual va, teniendo en cuenta que empieza desde la habitacion 1
+		// aunque pasos NO tiene la habitacion 1
+		for (int i = 0; i < habitacionesPasadas.length - 1; i++) {
+			if (i == 0) {
+				int hab1 = 1;
+				int hab2 = habitacionesPasadas[i];
+				for (int a = 0; a < habitacionesConectadas.length; a++) {
+					System.out.println(habitacionesConectadas[i][0] + "-" + habitacionesConectadas[i][0]);
+					if (!((habitacionesConectadas[i][0] == hab1 && habitacionesConectadas[i][1] == hab2)
+							|| (habitacionesConectadas[i][1] == hab1 && habitacionesConectadas[i][0] == hab2))) {
+						salida.add("GAME OVER");
+					}
+				}
+			} else {
+				int hab1 = habitacionesPasadas[i];
+				int hab2 = habitacionesPasadas[i + 1];
+			}
+		}
+
+		for (int i = 0; i < habitacionesConectadas.length; i++) {
+			for (int j = 0; j < habitacionesConectadas[i].length; j++) {
+
+			}
+		}
 	}
 
 	public static List<String> problemaD(List<String> entrada) { // Original
