@@ -3,6 +3,8 @@ package proyectofinal;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,25 +33,51 @@ class ProgramameTest {
 				);
 
 		// Comprobar si paso numeros >10000 o <-10000
+	}
 
+	// @Test
+	void testProblemaATestLimite() {
+		// No espera que devuelva nada porque esta mal hecho el caso de prueba
+		assertArrayEquals(new String[] {},
+				ej.problemaA(new ArrayList<>(Arrays.asList("50", "5 + -13", "10 / 2", "7 * 3", "3 / 0", "5 - 13")))
+						.toArray());
+	}
+
+	// @Test // No se si funciona asi
+	void testProblemaALimite() {
+		try {
+			ej.problemaA(new ArrayList<>(Arrays.asList("3", "5 + -13", "10 / 2", "7 * 3", "3 / 0", "5 - 13")))
+					.toArray();
+			fail("Algo ha fallado");
+		} catch (Exception e) {
+		}
 	}
 
 	/**
 	 * Enunciado en ProblemaB.pdf
 	 */
-	//@Test
+	// @Test
 	void testProblemaB() {
 		assertNotNull(ej.problemaB(Collections.EMPTY_LIST));
 		assertArrayEquals(new String[] { "OK", "ERROR", "OK", "ERROR", "ERROR", "ERROR" },
 				ej.problemaB(new ArrayList<>(Arrays.asList("6", "Polonio", "TT", "RADIO", "helio", "BeCeRRo", "AHA")))
 						.toArray());
-		// Si pasas texto con solo vocales no da error, pero tampoco hace nada
+	}
+
+	// @Test //No sale bien todavia
+	void testProblemaBLimite() {
+		assertArrayEquals(new String[] {},
+				ej.problemaB(new ArrayList<>(Arrays.asList("10", "Polonio", "TT", "RADIO", "helio", "BeCeRRo", "AHA")))
+						.toArray());
+		assertArrayEquals(new String[] {},
+				ej.problemaB(new ArrayList<>(Arrays.asList("6", "AAA", "TT", "RADIO", "helio", "BeCeRRo", "AHA")))
+						.toArray());
 	}
 
 	/**
 	 * Enunciado en ProblemaC.pdf
 	 */
-	// @Test //Creo que el assertArrayEquals esta puesto al reves
+	// @Test // Creo que el assertArrayEquals esta puesto al reves
 	void testProblemaC() {
 		assertNotNull(ej.problemaC(Collections.EMPTY_LIST));
 		assertArrayEquals(new String[] { "3", "100", "137", "7" },
@@ -65,12 +93,28 @@ class ProgramameTest {
 				ej.problemaC(new ArrayList<>(Arrays.asList("3", "100", "137", "7"))).toArray());
 	}
 
+	@Test
+	void testProblemaCLimite() {
+		assertArrayEquals(new String[] {},
+				ej.problemaC(new ArrayList<>(Arrays.asList("3", "0", "137", "7"))).toArray());
+	}
+
+	// @Test
+	void testProblemaC3() {
+		try {
+			ej.problemaC(new ArrayList<>(Arrays.asList("4", "100", "137", "7"))).toArray();
+			fail("Algo ha fallado");
+		} catch (Exception e) {
+		}
+	}
+
 	/**
 	 * Enunciado en ProblemaD.pdf
 	 */
 	// @Test
 	void testProblemaD() {
 		assertNotNull(ej.problemaD(Collections.EMPTY_LIST));
+		// Arreglado el problema con el caso de prueba 12 en vez de 1 2
 		assertArrayEquals(new String[] { "VICTORIA", "GAMEOVER", "PERDIDO" }, ej.problemaD(new ArrayList<>(
 				Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
 				.toArray());
