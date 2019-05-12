@@ -21,6 +21,14 @@ public class Programame {
 		// problemaC(new ArrayList<>(Arrays.asList("4", "100", "137", "7"))).toArray();
 		// problemaA(new ArrayList<>(Arrays.asList("3", "100 + -13", "10 / 2", "3 +
 		// 1")));
+
+		// No esta bien comprobado algo->se sale del index
+		// problemaD(new ArrayList<>(
+		// Arrays.asList("7", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1
+		// 2", "3 2", "2,3")))
+		// .toArray();
+
+		problemaB(new ArrayList<>(Arrays.asList("6", "AAA", "TT", "RADIO", "helio", "BeCeRRo", "AHA"))).toArray();
 	}
 
 	public static List<String> problemaA(List<String> entrada) {
@@ -115,46 +123,68 @@ public class Programame {
 		System.out.println(entrada);
 
 		// for(int i=0; i<entrada.size(); i++)
-		if (!entrada.isEmpty() && entrada.size() - 1 == Integer.parseInt(entrada.get(0))) {
+		// if (!entrada.isEmpty() && entrada.size() - 1 ==
+		// Integer.parseInt(entrada.get(0))) {
+		if (!entrada.isEmpty() && comprobarProbB(entrada)) {
 			for (String palabraActual : entrada) { // Recorro la lista de entrada
-				if (!palabraActual.matches(".*\\d.*") && !soloVocales(palabraActual)) {
-					palabraActual = palabraActual.toLowerCase(); // paso la palabra a minus para comprobarlas mejor
-					char[] charActual = palabraActual.toCharArray();
-					for (int i = 0; i < charActual.length; i++) {
-						if (charActual[i] == 'a' || charActual[i] == 'e' || charActual[i] == 'i' || charActual[i] == 'o'
-								|| charActual[i] == 'u') {
-							charActual[i] = ' ';
-						}
+				palabraActual = palabraActual.toLowerCase(); // paso la palabra a minus para comprobarlas mejor
+				char[] charActual = palabraActual.toCharArray();
+				for (int i = 0; i < charActual.length; i++) {
+					if (charActual[i] == 'a' || charActual[i] == 'e' || charActual[i] == 'i' || charActual[i] == 'o'
+							|| charActual[i] == 'u') {
+						charActual[i] = ' ';
 					}
-					String palabraSinVoc = new String(charActual);
-					palabraSinVoc = palabraSinVoc.replaceAll(" ", "");
-					char[] charSinVocSinEspacios = palabraSinVoc.toCharArray();
-					Arrays.sort(charSinVocSinEspacios); // Char ordenado
-					String palabraSinVocOrd = new String(charSinVocSinEspacios); // Palabra "original" ordenada
+				}
+				String palabraSinVoc = new String(charActual);
+				palabraSinVoc = palabraSinVoc.replaceAll(" ", "");
+				char[] charSinVocSinEspacios = palabraSinVoc.toCharArray();
+				Arrays.sort(charSinVocSinEspacios); // Char ordenado
+				String palabraSinVocOrd = new String(charSinVocSinEspacios); // Palabra "original" ordenada
 
-					if ((palabraSinVocOrd.length() == 1) || letraRepetida(palabraSinVoc)
-							|| palabraSinVocOrd.equals(palabraSinVoc)) {
-						salida.add("ERROR");
-					} else {
-						salida.add("OK");
-					}
+				if ((palabraSinVocOrd.length() == 1) || letraRepetida(palabraSinVoc)
+						|| palabraSinVocOrd.equals(palabraSinVoc)) {
+					salida.add("ERROR");
+				} else {
+					salida.add("OK");
 				}
 			}
 			System.out.println(salida);
 			return salida;
 		} else {
-			// Excepción si no hay tantos datos como casos de prueba
-			// try {
-			// throw new Exception("No hay tantos datos como casos de prueba");
-			// } catch (Exception e) {
-			// e.printStackTrace();
-			// }
 			return salida;
 		}
 
 	}
 
+	private static boolean comprobarProbB(List<String> entrada) {
+		// (usar los métodos de abajo y despues quitarlos del problemaC)
+		int totalCasos = Integer.parseInt(entrada.get(0));
+		int palabraBien = 0;
+		if ((totalCasos >= 1 && totalCasos <= 10000) && (entrada.size() - 1 == totalCasos)) {
+			for (int i = 1; i < entrada.size(); i++) {
+				if (palabraCorrecta(entrada.get(i))) {
+					palabraBien++;
+				}
+			}
+		}
+		if (palabraBien == entrada.size() - 1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean palabraCorrecta(String palabra) {
+		if (!palabra.matches(".*\\d.*") && !soloVocales(palabra) && palabra.length() <= 1000) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	private static boolean soloVocales(String palabra) {
+		// Primero tengo que pasar toda la palabra a minus
+		palabra = palabra.toLowerCase();
 		int voc = 0;
 		for (int i = 0; i < palabra.length(); i++) {
 			if (palabra.charAt(i) == 'a' || palabra.charAt(i) == 'e' || palabra.charAt(i) == 'i'
@@ -188,29 +218,51 @@ public class Programame {
 
 	public static List<String> problemaC(List<String> entrada) {
 		ArrayList salida = new ArrayList();
-		System.out.println(entrada);
+		// System.out.println(entrada);
 
-		int entradaActual = 1;
-		for (int i = 1; i < entrada.size(); i++) {
-			// for (String numeroActual : entrada) {// Trabajamos de numero en numero, uno
-			// por uno
-			// Comprobar que sea un numero entero y no un decimal
-			int num = Integer.parseInt(entrada.get(i));
-			// int num = Integer.parseInt(numeroActual);
-			int numero = 2;
-			int primos = 0;
-			while (numero <= num) { // Tiene que ir desde 2 (el 1 no cuenta) hasta el numero que sea
-				if (numPrimo(numero) && empiezaUno(numero)) {
-					primos++;
+		if (comprobarProbC(entrada)) {
+
+			int entradaActual = 1;
+			for (int i = 1; i < entrada.size(); i++) {
+				// for (String numeroActual : entrada) {// Trabajamos de numero en numero, uno
+				// por uno
+				// Comprobar que sea un numero entero y no un decimal
+				int num = Integer.parseInt(entrada.get(i));
+				// int num = Integer.parseInt(numeroActual);
+				int numero = 2;
+				int primos = 0;
+				while (numero <= num) { // Tiene que ir desde 2 (el 1 no cuenta) hasta el numero que sea
+					if (numPrimo(numero) && empiezaUno(numero)) {
+						primos++;
+					}
+					numero++;
 				}
-				numero++;
+				salida.add(String.valueOf(primos)); // Espera recibir un String y no un int
+				// salida.add(primos);
+				primos = 0;
 			}
-			salida.add(String.valueOf(primos)); // Espera recibir un String y no un int
-			// salida.add(primos);
-			primos = 0;
 		}
 		System.out.println(salida);
 		return salida;
+	}
+
+	private static boolean comprobarProbC(List<String> entrada) {
+		System.out.println(entrada);
+		int totalCasosPrueba = Integer.parseInt(entrada.get(0)); // >=1 <=100
+		int numeros = 0;
+
+		if ((totalCasosPrueba >= 1 && totalCasosPrueba <= 100) && (totalCasosPrueba == entrada.size() - 1)) {
+			for (int i = 0; i < totalCasosPrueba; i++) {
+				if (Integer.parseInt(entrada.get(i)) >= 1 && Integer.parseInt(entrada.get(i)) <= 2000000) {
+					numeros++;
+				}
+			}
+		}
+		if (totalCasosPrueba == numeros) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private static boolean empiezaUno(int numero) {
@@ -234,13 +286,13 @@ public class Programame {
 		}
 	}
 
-	public static List<String> problemaD(List<String> entrada) { // Otra prueba más
+	public static List<String> problemaD(List<String> entrada) {
 		// Muy cutre pero no se me ocurre nada mas de momento
 		boolean over = false, lost = false;
 		ArrayList salida = new ArrayList();
 		System.out.println(entrada);
 
-		if (!entrada.isEmpty()) {
+		if (!entrada.isEmpty()) { // !entrada.isEmpty() && datosCorrectos??
 			// Primero llamar a un metodo que compruebe que hay suficientes datos y que
 			// todos estan correctos
 			int totalCasos = Integer.parseInt(entrada.get(0));
@@ -300,6 +352,8 @@ public class Programame {
 				}
 				datoActual++;
 
+				// Hay que comprobar que los datos esten correctos ANTES siquiera de empezar a
+				// asignar variables
 				if (datosCorrectos(totalCasos, habitaciones, conexionesEntreHabitaciones)) {
 					// Comprobar si GAME OVER, PERDIDO, VICTORIA
 					// Muy cutre pero de momento no tengo mas ideas

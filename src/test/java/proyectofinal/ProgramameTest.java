@@ -64,7 +64,8 @@ class ProgramameTest {
 						.toArray());
 	}
 
-	// @Test //No sale bien todavia
+
+	// @Test
 	void testProblemaBLimite() {
 		assertArrayEquals(new String[] {},
 				ej.problemaB(new ArrayList<>(Arrays.asList("10", "Polonio", "TT", "RADIO", "helio", "BeCeRRo", "AHA")))
@@ -93,13 +94,13 @@ class ProgramameTest {
 				ej.problemaC(new ArrayList<>(Arrays.asList("3", "100", "137", "7"))).toArray());
 	}
 
-	@Test
+	// @Test
 	void testProblemaCLimite() {
 		assertArrayEquals(new String[] {},
 				ej.problemaC(new ArrayList<>(Arrays.asList("3", "0", "137", "7"))).toArray());
 	}
 
-	// @Test
+	// @Test //No se si esto funciona asi
 	void testProblemaC3() {
 		try {
 			ej.problemaC(new ArrayList<>(Arrays.asList("4", "100", "137", "7"))).toArray();
@@ -117,6 +118,13 @@ class ProgramameTest {
 		// Arreglado el problema con el caso de prueba 12 en vez de 1 2
 		assertArrayEquals(new String[] { "VICTORIA", "GAMEOVER", "PERDIDO" }, ej.problemaD(new ArrayList<>(
 				Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
+				.toArray());
+	}
+
+	@Test // Este test falla, no esta bien comprobado el ejercicio todavia
+	void testProblemaDCasosMalPasados() {
+		assertArrayEquals(new String[] {}, ej.problemaD(new ArrayList<>(
+				Arrays.asList("7", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
 				.toArray());
 	}
 
