@@ -292,7 +292,7 @@ public class Programame {
 		ArrayList salida = new ArrayList();
 		System.out.println(entrada);
 
-		if (!entrada.isEmpty()) { // !entrada.isEmpty() && datosCorrectos??
+		if (!entrada.isEmpty() && (comprobarProbD(entrada))) { // !entrada.isEmpty() && datosCorrectos??
 			// Primero llamar a un metodo que compruebe que hay suficientes datos y que
 			// todos estan correctos
 			int totalCasos = Integer.parseInt(entrada.get(0));
@@ -354,6 +354,7 @@ public class Programame {
 
 				// Hay que comprobar que los datos esten correctos ANTES siquiera de empezar a
 				// asignar variables
+				// Aka este if sobrara cuando este comprobado
 				if (datosCorrectos(totalCasos, habitaciones, conexionesEntreHabitaciones)) {
 					// Comprobar si GAME OVER, PERDIDO, VICTORIA
 					// Muy cutre pero de momento no tengo mas ideas
@@ -369,10 +370,11 @@ public class Programame {
 							.println("Habitaciones: " + habitaciones + " Num conexiones: " + conexionesEntreHabitaciones
 									+ " Habitaciones conectadas: " + habsConec + " Pasos: " + pasos);
 
-					casoActual++; // Cambiamos de caso cuando cogemos todos los datos
+					// casoActual++; // Cambiamos de caso cuando cogemos todos los datos
 					over = false;
 					lost = false;
 				}
+				casoActual++;
 			}
 		}
 
@@ -380,8 +382,17 @@ public class Programame {
 		return salida;
 	}
 
+	private static boolean comprobarProbD(List<String> entrada) {
+		int totalCasos = Integer.parseInt(entrada.get(0));
+		int datoActual = 1;
+		if (entrada.size() >= (totalCasos * 4) + 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	private static boolean datosCorrectos(int totalCasos, int habitaciones, int conexionesEntreHabitaciones) {
-		// TODO Auto-generated method stub
 		if ((totalCasos >= 1 && totalCasos <= 100) && (habitaciones >= 2 && habitaciones <= 40)
 				&& (conexionesEntreHabitaciones >= 1 && conexionesEntreHabitaciones <= 20)) {
 			return true;
@@ -389,6 +400,7 @@ public class Programame {
 			return false;
 		}
 	}
+
 	private static int comprobarPerdidoVictoria(int habitacionesTotal, List<Integer> pasos, ArrayList salida) {
 		int ultimaHab = 0;
 		for (int i = 0; i < pasos.size(); i++) {

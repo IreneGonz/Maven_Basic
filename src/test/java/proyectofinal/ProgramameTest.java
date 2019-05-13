@@ -121,11 +121,14 @@ class ProgramameTest {
 				.toArray());
 	}
 
-	@Test // Este test falla, no esta bien comprobado el ejercicio todavia
+	@Test
 	void testProblemaDCasosMalPasados() {
-		assertArrayEquals(new String[] {}, ej.problemaD(new ArrayList<>(
-				Arrays.asList("7", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
-				.toArray());
+		assertArrayEquals(new String[] {},
+				ej.problemaD(new ArrayList<>(
+						Arrays.asList("7", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "12", "3 2", "2,3")))
+						.toArray());
+		assertArrayEquals(new String[] {},
+				ej.problemaD(new ArrayList<>(Arrays.asList("1", "41", "1", "2 3", "4"))).toArray());
 	}
 
 	/**

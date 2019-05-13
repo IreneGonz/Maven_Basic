@@ -9,8 +9,9 @@ public class Programame2 {
 	public static void main(String[] args) {
 		// Aqui esta arreglado el caso de prueba porque estaba mal, pero no sale el
 		// ultimo PERDIDO
-		problemaD2(new ArrayList<>(
-				Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")));
+		// problemaD2(new ArrayList<>(
+		// Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1
+		// 2", "3 2", "2,3")));
 		// Da VICTORIA, GAMEOVER, PERDIDO
 
 		// Peta y el caso de prueba esta mal, tendre que conseguir que esto NO devuelva
@@ -41,7 +42,10 @@ public class Programame2 {
 		// Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1
 		// 2", "3 2", "2,3")));
 
-		// problemaD(new ArrayList<>(Arrays.asList("1", "2", "1", "1 2", "2")));
+		problemaD(new ArrayList<>(Arrays.asList("1", "2", "1", "1 2", "2")));
+
+		// problemaD2(new ArrayList<>(Arrays.asList("1", "2", "4", "1 2", "2")));
+		// Esto no deberia funcionar
 	}
 
 	public static List<String> problemaD2(List<String> entrada) { // Otra prueba más
@@ -110,7 +114,9 @@ public class Programame2 {
 				}
 				datoActual++;
 
-				if (datosCorrectos(totalCasos, habitaciones, conexionesEntreHabitaciones)) {
+				if (datosCorrectos(totalCasos, habitaciones, conexionesEntreHabitaciones,
+						habitacionesConectadas.length)) {
+					System.out.println(habitacionesConectadas.length);
 					// Comprobar si GAME OVER, PERDIDO, VICTORIA
 					// Muy cutre pero de momento no tengo mas ideas
 					if (comprobarGameOver(habitacionesConectadas, pasos, salida) == 1) {
@@ -136,10 +142,15 @@ public class Programame2 {
 		return salida;
 	}
 
-	private static boolean datosCorrectos(int totalCasos, int habitaciones, int conexionesEntreHabitaciones) {
+	private static boolean datosCorrectos(int totalCasos, int habitaciones, int conexionesEntreHabitaciones,
+			int habsConectadasLength) {
 		// TODO Auto-generated method stub
 		if ((totalCasos >= 1 && totalCasos <= 100) && (habitaciones >= 2 && habitaciones <= 40)
-				&& (conexionesEntreHabitaciones >= 1 && conexionesEntreHabitaciones <= 20)) {
+				&& (conexionesEntreHabitaciones >= 1 && conexionesEntreHabitaciones <= 20)
+				&& (conexionesEntreHabitaciones == habsConectadasLength)) {
+			// Comprobar que hay x conexionesEntreHabitaciones-> el vector de conexiones
+			// tiene x de length
+			System.out.println(conexionesEntreHabitaciones + "-" + habsConectadasLength);
 			return true;
 		} else {
 			return false;

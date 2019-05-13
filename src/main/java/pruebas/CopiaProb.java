@@ -8,9 +8,11 @@ public class CopiaProb {
 	public static void main(String[] args) {
 		// Este caso no tiene que devolver nada porque estan mal pasados los casos de
 		// prueba
-		problemaD(new ArrayList<>(
-				Arrays.asList("7", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
-						.toArray();
+		// problemaD(new ArrayList<>(
+		// Arrays.asList("7", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1
+		// 2", "3 2", "2,3")))
+		// .toArray();
+		problemaD(new ArrayList<>(Arrays.asList("1", "41", "1", "2 3", "4"))).toArray();
 	}
 
 	public static List<String> problemaD(List<String> entrada) {
@@ -83,6 +85,7 @@ public class CopiaProb {
 				// asignar variables
 				// Aka este if sobrara cuando este comprobado
 				if (datosCorrectos(totalCasos, habitaciones, conexionesEntreHabitaciones)) {
+					System.out.println("por que llego");
 					// Comprobar si GAME OVER, PERDIDO, VICTORIA
 					// Muy cutre pero de momento no tengo mas ideas
 					if (comprobarGameOver(habitacionesConectadas, pasos, salida) == 1) {
@@ -97,13 +100,13 @@ public class CopiaProb {
 							.println("Habitaciones: " + habitaciones + " Num conexiones: " + conexionesEntreHabitaciones
 									+ " Habitaciones conectadas: " + habsConec + " Pasos: " + pasos);
 
-					casoActual++; // Cambiamos de caso cuando cogemos todos los datos
+					// casoActual++; // Cambiamos de caso cuando cogemos todos los datos
 					over = false;
 					lost = false;
 				}
+				casoActual++;
 			}
 		}
-
 		System.out.println(salida);
 		return salida;
 	}
@@ -111,15 +114,20 @@ public class CopiaProb {
 	private static boolean comprobarProbD(List<String> entrada) {
 		int totalCasos = Integer.parseInt(entrada.get(0));
 		int datoActual = 1;
-		System.out.println(entrada.size());
-		return true;
+		if (entrada.size() >= (totalCasos * 4) + 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private static boolean datosCorrectos(int totalCasos, int habitaciones, int conexionesEntreHabitaciones) {
 		if ((totalCasos >= 1 && totalCasos <= 100) && (habitaciones >= 2 && habitaciones <= 40)
 				&& (conexionesEntreHabitaciones >= 1 && conexionesEntreHabitaciones <= 20)) {
+			System.out.println("datos correctos TRUE");
 			return true;
 		} else {
+			System.out.println("datos incorrectos FALSE");
 			return false;
 		}
 	}
