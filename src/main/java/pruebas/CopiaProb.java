@@ -12,7 +12,20 @@ public class CopiaProb {
 		// Arrays.asList("7", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1
 		// 2", "3 2", "2,3")))
 		// .toArray();
-		problemaD(new ArrayList<>(Arrays.asList("1", "41", "1", "2 3", "4"))).toArray();
+
+		// Este caso de prueba no puede funcionar porque se pasa de los casos de prueba
+		// problemaD(new ArrayList<>(Arrays.asList("101", "1", "1", "2 3",
+		// "4"))).toArray();
+
+		// Este se pasa de habitaciones
+		// problemaD(new ArrayList<>(Arrays.asList("1", "41", "1", "2 3",
+		// "4"))).toArray();
+
+		// Demasiadas conexiones (mas conexiones que habitaciones)
+		// problemaD(new ArrayList<>(Arrays.asList("1", "2", "1", "2 3",
+		// "4"))).toArray();
+
+		problemaD(new ArrayList<>(Arrays.asList("1", "2", "1", "1 2", "2"))).toArray();
 	}
 
 	public static List<String> problemaD(List<String> entrada) {
@@ -85,7 +98,6 @@ public class CopiaProb {
 				// asignar variables
 				// Aka este if sobrara cuando este comprobado
 				if (datosCorrectos(totalCasos, habitaciones, conexionesEntreHabitaciones)) {
-					System.out.println("por que llego");
 					// Comprobar si GAME OVER, PERDIDO, VICTORIA
 					// Muy cutre pero de momento no tengo mas ideas
 					if (comprobarGameOver(habitacionesConectadas, pasos, salida) == 1) {
@@ -113,8 +125,87 @@ public class CopiaProb {
 
 	private static boolean comprobarProbD(List<String> entrada) {
 		int totalCasos = Integer.parseInt(entrada.get(0));
-		int datoActual = 1;
-		if (entrada.size() >= (totalCasos * 4) + 1) {
+		int condiciones = 0;
+		if ((totalCasos >= 1 && totalCasos <= 100) && (entrada.size() >= (totalCasos * 4) + 1)) {
+			// Comprobar num casos de prueba y que sea posible que pueda estar bien los
+			// casos, si no, fuera
+			int datoActual = 1;
+			condiciones++;
+			if (Integer.parseInt(entrada.get(datoActual)) >= 2 && Integer.parseInt(entrada.get(datoActual)) <= 40) {
+				// Habitaciones comprobadas
+				int habs = Integer.parseInt(entrada.get(datoActual));
+				datoActual++;
+				condiciones++;
+				if (Integer.parseInt(entrada.get(datoActual)) >= 1 && Integer.parseInt(entrada.get(datoActual)) <= 20
+						&& Integer.parseInt(entrada.get(datoActual)) >= habs - 1) {
+					// conexiones comprobadas
+					condiciones++;
+
+					for (int i = 0; i < Integer.parseInt(entrada.get(datoActual - 1)); i++) {
+						// System.out.println(i);
+						datoActual++;
+						if (entrada.get(datoActual).contains(" ")
+								&& comprobarConexHabs(entrada.get(datoActual), habs)) {
+							// Si contiene " " y la habitacion dentro del rango de habitaciones que tenemos
+							condiciones++;
+							// Comprobar que cada sala que aparece dentro de las conexiones esta dentro del
+							// numero de habitaciones que tenemos
+						}
+					}
+					datoActual++;
+					// Solo quedan los pasos
+					if (entrada.get(datoActual) != null && comprobarPasos(entrada.get(datoActual), habs)) {
+						condiciones++;
+						// Pasos comprobados
+					}
+					// System.out.println(condiciones);
+				}
+			}
+		}
+		if (condiciones == entrada.size()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean comprobarPasos(String string, int habs) {
+		// Dos posibilidades: que se pueda hacer split con "," o no. En ambos casos
+		// habra que comprobar que el numero este en habs, como en comprobarConexHabs
+		String aux[] = string.split(",");
+		int aux2[] = new int[aux.length];
+		int coincide = 0;
+
+		for (int i = 0; i < aux.length; i++) {
+			aux2[i] = Integer.parseInt(aux[i]);
+			for (int j = 1; j <= habs; j++) {
+				if (aux2[i] == j) {
+					coincide++;
+				}
+			}
+		}
+		if (coincide == aux.length) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean comprobarConexHabs(String string, int habs) {
+		// Comprobar que si hay 3 habitaciones no haya una conexion hab 2 5 por ejemplo
+		// System.out.println(string);
+		int coincide = 0;
+		String aux[] = string.split(" ");
+		int aux2[] = new int[aux.length];
+		for (int i = 0; i < aux.length; i++) {
+			aux2[i] = Integer.parseInt(aux[i]);
+			for (int j = 1; j <= habs; j++) {
+				if (aux2[i] == j) {
+					coincide++;
+				}
+			}
+		}
+		if (coincide == string.length() - 1) {
 			return true;
 		} else {
 			return false;
@@ -122,6 +213,7 @@ public class CopiaProb {
 	}
 
 	private static boolean datosCorrectos(int totalCasos, int habitaciones, int conexionesEntreHabitaciones) {
+		// Esto sobrara cuando el metodo de arriba este bien hecho
 		if ((totalCasos >= 1 && totalCasos <= 100) && (habitaciones >= 2 && habitaciones <= 40)
 				&& (conexionesEntreHabitaciones >= 1 && conexionesEntreHabitaciones <= 20)) {
 			System.out.println("datos correctos TRUE");

@@ -112,7 +112,7 @@ class ProgramameTest {
 	/**
 	 * Enunciado en ProblemaD.pdf
 	 */
-	// @Test
+	@Test
 	void testProblemaD() {
 		assertNotNull(ej.problemaD(Collections.EMPTY_LIST));
 		// Arreglado el problema con el caso de prueba 12 en vez de 1 2
@@ -121,7 +121,7 @@ class ProgramameTest {
 				.toArray());
 	}
 
-	@Test
+	// @Test
 	void testProblemaDCasosMalPasados() {
 		assertArrayEquals(new String[] {},
 				ej.problemaD(new ArrayList<>(

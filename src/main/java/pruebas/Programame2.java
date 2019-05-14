@@ -42,7 +42,8 @@ public class Programame2 {
 		// Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1
 		// 2", "3 2", "2,3")));
 
-		problemaD(new ArrayList<>(Arrays.asList("1", "2", "1", "1 2", "2")));
+		// problemaD(new ArrayList<>(Arrays.asList("1", "2", "1", "1 2", "2")));
+		problemaD2(new ArrayList<>(Arrays.asList("1", "41", "1", "2 3", "4"))).toArray();
 
 		// problemaD2(new ArrayList<>(Arrays.asList("1", "2", "4", "1 2", "2")));
 		// Esto no deberia funcionar
