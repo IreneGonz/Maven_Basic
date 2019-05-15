@@ -9,7 +9,13 @@ public class Programame {
 	public static void main(String[] args) {
 		// Arreglar problemaB -> me coge el 6 como una entrada mas, no como el numero de
 		// entradas
-		problemaB(new ArrayList<>(Arrays.asList("6", "Polonio", "TT", "RADIO", "helio", "BeCeRRo", "AHA"))).toArray();
+		// problemaB(new ArrayList<>(Arrays.asList("6", "Polonio", "TT", "RADIO",
+		// "helio", "BeCeRRo", "AHA"))).toArray();
+		// problemaC(new ArrayList<>(Arrays.asList("3", "100", "137", "7"))).toArray();
+
+		problemaD(new ArrayList<>(
+				Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
+						.toArray();
 	}
 
 	public static List<String> problemaA(List<String> entrada) {
@@ -24,40 +30,40 @@ public class Programame {
 				String actual[] = entrada.get(entradaActual).split(" ");
 				// System.out.println(2 + Integer.parseInt(new String("+") + 3));
 				// if (actual.length == 3) {
-					int n1 = Integer.parseInt(actual[0]);
-					int n2 = Integer.parseInt(actual[2]);
-					// if ((Integer.parseInt(actual[0]) >= -10000 && Integer.parseInt(actual[0]) <=
-					// 10000)
-					// && (Integer.parseInt(actual[2]) >= -10000 && Integer.parseInt(actual[2]) <=
-					// 10000)) {
+				int n1 = Integer.parseInt(actual[0]);
+				int n2 = Integer.parseInt(actual[2]);
+				// if ((Integer.parseInt(actual[0]) >= -10000 && Integer.parseInt(actual[0]) <=
+				// 10000)
+				// && (Integer.parseInt(actual[2]) >= -10000 && Integer.parseInt(actual[2]) <=
+				// 10000)) {
 				// if ((n1 >= -10000 && n1 <= 10000) && (n2 >= -10000 && n2 <= 10000)) {
-						switch (actual[1]) {
-						case "+":
-							salida.add(String.valueOf(n1 + n2));
-							// salida.add(n1 + n2);
-							// System.out.println(num1 + num2);
-							break;
-						case "-":
-							salida.add(String.valueOf(n1 - n2));
-							// salida.add(n1 - n2);
-							// System.out.println(num1 - num2);
-							break;
-						case "/":
-							if (n2 != 0) {
-								salida.add(String.valueOf(n1 / 2));
-								// salida.add(n1 / n2);
-								// System.out.println(num1 / num2);
-							} else {
-								salida.add("ERROR");
-								// System.out.println("ERROR");
-							}
-							break;
-						case "*":
-							salida.add(String.valueOf(n1 * n2));
-							// salida.add(n1 * n2);
-							// System.out.println(num1 * num2);
-							break;
-						}
+				switch (actual[1]) {
+				case "+":
+					salida.add(String.valueOf(n1 + n2));
+					// salida.add(n1 + n2);
+					// System.out.println(num1 + num2);
+					break;
+				case "-":
+					salida.add(String.valueOf(n1 - n2));
+					// salida.add(n1 - n2);
+					// System.out.println(num1 - num2);
+					break;
+				case "/":
+					if (n2 != 0) {
+						salida.add(String.valueOf(n1 / 2));
+						// salida.add(n1 / n2);
+						// System.out.println(num1 / num2);
+					} else {
+						salida.add("ERROR");
+						// System.out.println("ERROR");
+					}
+					break;
+				case "*":
+					salida.add(String.valueOf(n1 * n2));
+					// salida.add(n1 * n2);
+					// System.out.println(num1 * num2);
+					break;
+				}
 				// }
 				// }
 				entradaActual++;
@@ -107,10 +113,10 @@ public class Programame {
 		// if (!entrada.isEmpty() && entrada.size() - 1 ==
 		// Integer.parseInt(entrada.get(0))) {
 		if (!entrada.isEmpty() && comprobarProbB(entrada)) {
-			//for (String palabraActual : entrada) { // Recorro la lista de entrada
-			for(int j=1; j<entrada.size(); j++) {
+			// for (String palabraActual : entrada) { // Recorro la lista de entrada
+			for (int j = 1; j < entrada.size(); j++) {
 				// if(no es un numero??
-				String palabraActual=entrada.get(j);
+				String palabraActual = entrada.get(j);
 				palabraActual = palabraActual.toLowerCase(); // paso la palabra a minus para comprobarlas mejor
 				char[] charActual = palabraActual.toCharArray();
 				for (int i = 0; i < charActual.length; i++) {
@@ -204,9 +210,9 @@ public class Programame {
 		ArrayList salida = new ArrayList();
 		// System.out.println(entrada);
 
-		if (comprobarProbC(entrada)) {
+		if (!entrada.isEmpty() && comprobarProbC(entrada)) {
 
-			int entradaActual = 1;
+			// int entradaActual = 1;
 			for (int i = 1; i < entrada.size(); i++) {
 				// for (String numeroActual : entrada) {// Trabajamos de numero en numero, uno
 				// por uno
@@ -460,10 +466,10 @@ public class Programame {
 		// Esto sobrara cuando el metodo de arriba este bien hecho
 		if ((totalCasos >= 1 && totalCasos <= 100) && (habitaciones >= 2 && habitaciones <= 40)
 				&& (conexionesEntreHabitaciones >= 1 && conexionesEntreHabitaciones <= 20)) {
-			System.out.println("datos correctos TRUE");
+			// System.out.println("datos correctos TRUE");
 			return true;
 		} else {
-			System.out.println("datos incorrectos FALSE");
+			// System.out.println("datos incorrectos FALSE");
 			return false;
 		}
 	}

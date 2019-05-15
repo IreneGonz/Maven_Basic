@@ -1,52 +1,12 @@
 package pruebas;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Programame2 {
 
 	public static void main(String[] args) {
-		// Aqui esta arreglado el caso de prueba porque estaba mal, pero no sale el
-		// ultimo PERDIDO
-		// problemaD2(new ArrayList<>(
-		// Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1
-		// 2", "3 2", "2,3")));
-		// Da VICTORIA, GAMEOVER, PERDIDO
 
-		// Peta y el caso de prueba esta mal, tendre que conseguir que esto NO devuelva
-		// nada
-		// problemaD2(new ArrayList<>(
-		// Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1
-		// 2", "3 2", "2,3")));
-
-		// problemaD2(new ArrayList<>(Arrays.asList("2", "2", "1", "1 2", "2", "3", "1",
-		// "1 2", "2,3")));
-		// Da VICTORIA y GAMEOVER (con problemaD funciona, con problemaD2 no)
-
-		// problemaD2(new ArrayList<>(Arrays.asList("1", "2", "1", "1 2", "2"))); //
-		// Tiene que dar VICTORIA
-
-		// problemaD2(new ArrayList<>(Arrays.asList("1", "5", "2", "1 2", "3 2",
-		// "2,3")));
-		// Deberia dar PERDIDO
-
-		// problemaD2(new ArrayList<>(Arrays.asList("1", "5", "2", "1 2", "3 2",
-		// "1,5")));
-		// Creo que deberia dar GAMEOVER
-
-		// problemaD2(new ArrayList<>(Arrays.asList("1", "2", "1", "1 2", "2")));
-		// Esto deberia dar VICTORIA
-
-		// problemaD(new ArrayList<>(
-		// Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1
-		// 2", "3 2", "2,3")));
-
-		// problemaD(new ArrayList<>(Arrays.asList("1", "2", "1", "1 2", "2")));
-		problemaD2(new ArrayList<>(Arrays.asList("1", "41", "1", "2 3", "4"))).toArray();
-
-		// problemaD2(new ArrayList<>(Arrays.asList("1", "2", "4", "1 2", "2")));
-		// Esto no deberia funcionar
 	}
 
 	public static List<String> problemaD2(List<String> entrada) { // Otra prueba más
@@ -195,33 +155,31 @@ public class Programame2 {
 		} else if (habitacionesPasadas.length - 1 > 0) {
 			// Si hay más de 1 paso (hago comprobacion de que no esta vacio)
 			for (int i = 0; i < habitacionesPasadas.length; i++) {
-					if (i == 0) {
-						int hab1 = 1;
-						int hab2 = habitacionesPasadas[i];
-						for (int j = 0; j < habitacionesConectadas.length; j++) {
-							// System.out.println(habitacionesConectadas[j][0] + "-" +
-							// habitacionesConectadas[j][1]);
-							// System.out.println("H1-" + hab1 + " H2-" + hab2);
+				if (i == 0) {
+					int hab1 = 1;
+					int hab2 = habitacionesPasadas[i];
+					for (int j = 0; j < habitacionesConectadas.length; j++) {
+						// System.out.println(habitacionesConectadas[j][0] + "-" +
+						// habitacionesConectadas[j][1]);
+						// System.out.println("H1-" + hab1 + " H2-" + hab2);
 						if ((habitacionesConectadas[j][0] == hab1 && habitacionesConectadas[j][1] == hab2)
-									|| (habitacionesConectadas[j][1] == hab1
-										&& habitacionesConectadas[j][0] == hab2)) {
-								hayConexion++;
-							}
-						}
-					} else {
-						int hab1 = habitacionesPasadas[i - 1];
-						int hab2 = habitacionesPasadas[i];
-						for (int j = 0; j < habitacionesConectadas.length; j++) {
-							// System.out.println(habitacionesConectadas[i][0] + "-" +
-							// habitacionesConectadas[i][1]);
-							// System.out.println(hab1 + "-" + hab2);
-						if ((habitacionesConectadas[j][0] == hab1 && habitacionesConectadas[j][1] == hab2)
-									|| (habitacionesConectadas[j][1] == hab1
-										&& habitacionesConectadas[j][0] == hab2)) {
+								|| (habitacionesConectadas[j][1] == hab1 && habitacionesConectadas[j][0] == hab2)) {
 							hayConexion++;
-							}
 						}
 					}
+				} else {
+					int hab1 = habitacionesPasadas[i - 1];
+					int hab2 = habitacionesPasadas[i];
+					for (int j = 0; j < habitacionesConectadas.length; j++) {
+						// System.out.println(habitacionesConectadas[i][0] + "-" +
+						// habitacionesConectadas[i][1]);
+						// System.out.println(hab1 + "-" + hab2);
+						if ((habitacionesConectadas[j][0] == hab1 && habitacionesConectadas[j][1] == hab2)
+								|| (habitacionesConectadas[j][1] == hab1 && habitacionesConectadas[j][0] == hab2)) {
+							hayConexion++;
+						}
+					}
+				}
 			}
 		}
 		if (hayConexion == habitacionesPasadas.length) {

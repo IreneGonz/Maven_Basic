@@ -1,16 +1,13 @@
 package proyectofinal;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
@@ -26,11 +23,9 @@ class ProgramameTest {
 	// @Test
 	void testProblemaA() {
 		assertNotNull(ej.problemaA(Collections.EMPTY_LIST));
-		assertArrayEquals(
-				new String[] { "-8","5","21","ERROR","-8" },
+		assertArrayEquals(new String[] { "-8", "5", "21", "ERROR", "-8" },
 				ej.problemaA(new ArrayList<>(Arrays.asList("5", "5 + -13", "10 / 2", "7 * 3", "3 / 0", "5 - 13")))
-						.toArray()
-				);
+						.toArray());
 
 		// Comprobar si paso numeros >10000 o <-10000
 	}
@@ -64,7 +59,6 @@ class ProgramameTest {
 						.toArray());
 	}
 
-
 	// @Test
 	void testProblemaBLimite() {
 		assertArrayEquals(new String[] {},
@@ -78,14 +72,16 @@ class ProgramameTest {
 	/**
 	 * Enunciado en ProblemaC.pdf
 	 */
-	// @Test // Creo que el assertArrayEquals esta puesto al reves
+	// @Test
 	void testProblemaC() {
 		assertNotNull(ej.problemaC(Collections.EMPTY_LIST));
-		assertArrayEquals(new String[] { "3", "100", "137", "7" },
-				ej.problemaC(new ArrayList<>(Arrays.asList("4", "12", "0"))).toArray());
-		// assertArrayEquals(new String[] { "4", "12", "0" },
-		// ej.problemaC(new ArrayList<>(Arrays.asList("3", "100", "137",
-		// "7"))).toArray());
+
+		// Esta puesto al reves
+		// assertArrayEquals(new String[] { "3", "100", "137", "7" },
+		// ej.problemaC(new ArrayList<>(Arrays.asList("4", "12", "0"))).toArray());
+
+		assertArrayEquals(new String[] { "4", "12", "0" },
+				ej.problemaC(new ArrayList<>(Arrays.asList("3", "100", "137", "7"))).toArray());
 	}
 
 	// @Test
@@ -139,9 +135,14 @@ class ProgramameTest {
 	// @Test
 	void testProblemaE() {
 		assertNotNull(ej.problemaE(Collections.EMPTY_LIST));
+		// Sobra el 200
+//		assertArrayEquals(
+//				new String[] { "Caso 1:", "100 1000", "50 300", "50 5000", "Caso 2:", "60 300", "50 300", "100 1000" },
+//				ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000", "50 300", "50 5000", "200", "3",
+//						"100 1000", "60 300", "50 300"))).toArray());
 		assertArrayEquals(
 				new String[] { "Caso 1:", "100 1000", "50 300", "50 5000", "Caso 2:", "60 300", "50 300", "100 1000" },
-				ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000", "50 300", "50 5000", "200", "3",
+				ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000", "50 300", "50 5000", "3",
 						"100 1000", "60 300", "50 300"))).toArray());
 	}
 
