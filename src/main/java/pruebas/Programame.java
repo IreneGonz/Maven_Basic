@@ -406,7 +406,8 @@ public class Programame {
 				}
 			}
 		}
-		if (condiciones == entrada.size()) {
+		if (condiciones == 5) {
+			// if (condiciones == entrada.size()) {
 			return true;
 		} else {
 			return false;

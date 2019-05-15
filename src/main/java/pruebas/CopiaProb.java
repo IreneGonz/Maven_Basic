@@ -25,7 +25,13 @@ public class CopiaProb {
 		// problemaD(new ArrayList<>(Arrays.asList("1", "2", "1", "2 3",
 		// "4"))).toArray();
 
-		problemaD(new ArrayList<>(Arrays.asList("1", "2", "1", "1 2", "2"))).toArray();
+		// Deberia devolver algo pero no es el caso
+		problemaD(new ArrayList<>(
+				Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
+						.toArray();
+
+		// problemaD(new ArrayList<>(Arrays.asList("1", "2", "1", "1 2",
+		// "2"))).toArray();
 	}
 
 	public static List<String> problemaD(List<String> entrada) {
@@ -162,7 +168,8 @@ public class CopiaProb {
 				}
 			}
 		}
-		if (condiciones == entrada.size()) {
+		if (condiciones == 5) {
+			// if (condiciones == entrada.size()) {
 			return true;
 		} else {
 			return false;

@@ -100,7 +100,7 @@ class ProgramameTest {
 				ej.problemaC(new ArrayList<>(Arrays.asList("3", "0", "137", "7"))).toArray());
 	}
 
-	// @Test //No se si esto funciona asi
+	// @Test // No se si esto funciona asi
 	void testProblemaC3() {
 		try {
 			ej.problemaC(new ArrayList<>(Arrays.asList("4", "100", "137", "7"))).toArray();
@@ -112,7 +112,7 @@ class ProgramameTest {
 	/**
 	 * Enunciado en ProblemaD.pdf
 	 */
-	@Test
+	// @Test
 	void testProblemaD() {
 		assertNotNull(ej.problemaD(Collections.EMPTY_LIST));
 		// Arreglado el problema con el caso de prueba 12 en vez de 1 2
