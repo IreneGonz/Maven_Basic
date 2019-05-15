@@ -129,6 +129,8 @@ class ProgramameTest {
 						.toArray());
 		assertArrayEquals(new String[] {},
 				ej.problemaD(new ArrayList<>(Arrays.asList("1", "41", "1", "2 3", "4"))).toArray());
+		assertArrayEquals(new String[] {},
+				ej.problemaD(new ArrayList<>(Arrays.asList("1", "1", "2", "2 3", "4,"))).toArray());
 	}
 
 	/**
