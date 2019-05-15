@@ -23,7 +23,7 @@ class ProgramameTest {
 	/**
 	 * Enunciado en ProblemaA.pdf
 	 */
-	// @Test
+	@Test
 	void testProblemaA() {
 		assertNotNull(ej.problemaA(Collections.EMPTY_LIST));
 		assertArrayEquals(
@@ -35,7 +35,7 @@ class ProgramameTest {
 		// Comprobar si paso numeros >10000 o <-10000
 	}
 
-	// @Test
+	@Test
 	void testProblemaATestLimite() {
 		// No espera que devuelva nada porque esta mal hecho el caso de prueba
 		assertArrayEquals(new String[] {},

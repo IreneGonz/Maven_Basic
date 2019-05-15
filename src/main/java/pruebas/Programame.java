@@ -7,13 +7,9 @@ import java.util.List;
 public class Programame {
 
 	public static void main(String[] args) {
-		// A comprobar donde peta el comprobarProbD (copia en copiaProb)
-		problemaD(new ArrayList<>(
-				Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
-						.toArray();
-
-		// problemaB(new ArrayList<>(Arrays.asList("6", "AAA", "TT", "RADIO", "helio",
-		// "BeCeRRo", "AHA"))).toArray();
+		// Arreglar problemaB -> me coge el 6 como una entrada mas, no como el numero de
+		// entradas
+		problemaB(new ArrayList<>(Arrays.asList("6", "Polonio", "TT", "RADIO", "helio", "BeCeRRo", "AHA"))).toArray();
 	}
 
 	public static List<String> problemaA(List<String> entrada) {
@@ -111,7 +107,10 @@ public class Programame {
 		// if (!entrada.isEmpty() && entrada.size() - 1 ==
 		// Integer.parseInt(entrada.get(0))) {
 		if (!entrada.isEmpty() && comprobarProbB(entrada)) {
-			for (String palabraActual : entrada) { // Recorro la lista de entrada
+			//for (String palabraActual : entrada) { // Recorro la lista de entrada
+			for(int j=1; j<entrada.size(); j++) {
+				// if(no es un numero??
+				String palabraActual=entrada.get(j);
 				palabraActual = palabraActual.toLowerCase(); // paso la palabra a minus para comprobarlas mejor
 				char[] charActual = palabraActual.toCharArray();
 				for (int i = 0; i < charActual.length; i++) {
