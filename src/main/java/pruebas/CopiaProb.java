@@ -35,20 +35,20 @@ public class CopiaProb {
 
 				for (int i = 0; i < totalNaves; i++) {
 					datosNaves.add(entrada.get(datoActual));
-//					String c[] = entrada.get(datoActual).split(" ");
-//					for (int j = 0; j < c.length; j++) {
-//						datosNaves.add(c[j]);
-//					}
+					// String c[] = entrada.get(datoActual).split(" ");
+					// for (int j = 0; j < c.length; j++) {
+					// datosNaves.add(c[j]);
+					// }
 					datoActual++;
 				}
 
-//				for (int i = 0, x = 0; i < oxiPes.length; i++) {
-//					for (int j = 0; j < oxiPes[i].length; j++) {
-//						oxiPes[i][j] = Integer.parseInt(datosNaves.get(x));
-//						x++;
-//					}
-//				}
-				System.out.println("Caso actual: " + casoActual + " Oxigeno necesario: " + oxigenoMin + " N� naves: "
+				// for (int i = 0, x = 0; i < oxiPes.length; i++) {
+				// for (int j = 0; j < oxiPes[i].length; j++) {
+				// oxiPes[i][j] = Integer.parseInt(datosNaves.get(x));
+				// x++;
+				// }
+				// }
+				System.out.println("Caso actual: " + casoActual + " Oxigeno necesario: " + oxigenoMin + " N� naves: "
 						+ totalNaves + " Oxigeno-Peso: " + datosNaves);
 				// Esta el vector cargado con el peso de las naves y el oxigeno, falta comprobar
 				// cual es mejor y ordenarlos
@@ -65,20 +65,19 @@ public class CopiaProb {
 	private static void comprobarNaves(int oxigenoMin, List<String> datosNaves, int casoActual, ArrayList salida) {
 		// List definitiva = new ArrayList();
 		salida.add("Caso " + casoActual + ":");
-
 		System.out.println("Antes " + datosNaves);
 		// Ordena las naves de mayor a menor?
 		// No tengo ni idea de como funcionaba esto, tenia mas logica antes
 		Collections.sort(datosNaves);
-		System.out.println("Despues " + datosNaves);
+		// System.out.println("Despues " + datosNaves);
 		String aux[][] = new String[datosNaves.size()][2];
 		int oxiPeso[][] = new int[datosNaves.size()][2];
 
 		for (int i = 0; i < datosNaves.size(); i++) {
 			aux[i] = datosNaves.get(i).split(" ");
-//			if (aux[i][0].equals(String.valueOf(oxigenoMin))) {
-//				System.out.println("Aqui hay oxigeno suficiente");
-//			}
+			// if (aux[i][0].equals(String.valueOf(oxigenoMin))) {
+			// System.out.println("Aqui hay oxigeno suficiente");
+			// }
 		}
 		for (int i = 0; i < aux.length; i++) {
 			for (int j = 0; j < aux[i].length; j++) {
@@ -86,30 +85,44 @@ public class CopiaProb {
 			}
 		}
 		int datosBlanco = 0;
-		// while (datosBlanco < datosNaves.size()) { //Hace falta esto?
-		int posMax = 0;
-		for (int i = 0; i < aux.length; i++) {
-			if (oxiPeso[i][0] >= oxigenoMin && (oxiPeso[i][0] >= oxiPeso[posMax][0]
-					|| (oxiPeso[i][0] == oxiPeso[posMax][0] && oxiPeso[i][1] < oxiPeso[posMax][1]))) {
-				// Si alcanza o supera el oxigenoMinimo y tiene mas oxigeno que la entrada en
-				// posicion posMax o si tienen la misma cantidad de osxigeno pero la primera
-				// nave pesa menos que la otra->entra
-				salida.add(aux[i][0] + " " + aux[i][1]);
-				// A la lista definitiva hay que meterle los numeros separados por espacios
-				oxiPeso[i][0] = 0;
-				oxiPeso[i][1] = 0;
-				posMax = i; // Creo que esto tiene que estar
-				datosBlanco++;
-				// Falta otro else if? que tenga en cuenta si alcanza el O2 necesario pero no es
-				// mejor que la mejor entrada en la lista definitiva
-			} else if (oxiPeso[i][0] < oxigenoMin) { // Si no alcanza el oxigeno minimo
-				System.out.println(oxiPeso[i][0] + "-" + oxiPeso[i][1]);
+		while (datosBlanco < datosNaves.size()) { // Hace falta esto?
+			int posMax = 0;
+			int noMinOx[][] = new int[datosNaves.size()][2];
+			// Este tamaño esta mal puesto, no es asi
+			for (int i = 0; i < aux.length; i++) {
+				if (oxiPeso[i][0] >= oxigenoMin && (oxiPeso[i][0] >= oxiPeso[posMax][0]
+						|| (oxiPeso[i][0] == oxiPeso[posMax][0] && oxiPeso[i][1] < oxiPeso[posMax][1]))) {
+					// Si alcanza o supera el oxigenoMinimo y tiene mas oxigeno que la entrada en
+					// posicion posMax o si tienen la misma cantidad de osxigeno pero la primera
+					// nave pesa menos que la otra->entra
+					salida.add(aux[i][0] + " " + aux[i][1]);
+					// A la lista definitiva hay que meterle los numeros separados por espacios
+					oxiPeso[i][0] = 0;
+					oxiPeso[i][1] = 0;
+					posMax = i; // Creo que esto tiene que estar
+					datosBlanco++;
+					// Falta otro else if? que tenga en cuenta si alcanza el O2 necesario pero no es
+					// mejor que la mejor entrada en la lista definitiva
+				} else if (oxiPeso[i][0] < oxigenoMin && oxiPeso[i][0] != 0) {
+					// Si no alcanza el oxigeno minimo
+					// System.out.println(oxiPeso[i][0] + "-" + oxiPeso[i][1]);
+					// Meter estos datos en otra tabla/lista y pasar estos datos a 0?
+					noMinOx[i][0] = oxiPeso[i][0];
+					oxiPeso[i][0] = 0;
+					noMinOx[i][1] = oxiPeso[i][1];
+					oxiPeso[i][1] = 0;
+					datosBlanco++;
+				}
+			}
+			// Aqui tengo que hacer algo con los datos que tengo en noMinOx NO ESTA BIEN
+			// HECHO EL TAMAÑO
+			for (int i = 0; i < noMinOx.length; i++) {
+				// System.out.println(noMinOx[i][0] + "-" + noMinOx[i][1]);
 			}
 		}
-		// }
+		System.out.println("salgo del bucle");
 
-		// Una posibilidad era usar TreeMap pero no se puede repetir nunca el primer
-		// numero
+		// Una posibilidad era usar TreeMap pero no deja repetir nunca el primer numero
 		// HashMap<Integer, Integer> map = new HashMap<>();
 		// map.put(oxiPeso[i][0], oxiPeso[i][1]);
 		// TreeMap<Integer, Integer> treeMap = new TreeMap<>(map);
