@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
@@ -132,13 +133,27 @@ class ProgramameTest {
 	/**
 	 * Enunciado en ProblemaE.pdf
 	 */
-	// @Test
+	@Test
 	void testProblemaE() {
 		assertNotNull(ej.problemaE(Collections.EMPTY_LIST));
 		assertArrayEquals(
 				new String[] { "Caso 1:", "100 1000", "50 300", "50 5000", "Caso 2:", "60 300", "50 300", "100 1000" },
 				ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000", "50 300", "50 5000", "200", "3",
 						"100 1000", "60 300", "50 300"))).toArray());
+	}
+
+	@Test
+	void testProblemaECasosLimite() {
+		assertArrayEquals(new String[] { "" }, ej.problemaE(new ArrayList<>(Arrays.asList("10", "1000000", "3",
+				"100 1000", "50 300", "50 5000", "200", "3", "100 1000", "60 300", "50 300"))).toArray());
+		assertArrayEquals(new String[] { "" }, ej.problemaE(new ArrayList<>(Arrays.asList("2", "1000001", "3",
+				"100 1000", "50 300", "50 5000", "200", "3", "100 1000", "60 300", "50 300"))).toArray());
+		assertArrayEquals(new String[] { "" }, ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "500000",
+				"100 1000", "50 300", "50 5000", "200", "3", "100 1000", "60 300", "50 300"))).toArray());
+		assertArrayEquals(new String[] { "" }, ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000",
+				"50 300", "50 5000", "200", "3", "1000000 1000", "60 300", "50 300"))).toArray());
+		assertArrayEquals(new String[] { "" }, ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000",
+				"50 300", "50 5000", "200", "3", "100 1000", "60 1000000", "50 300"))).toArray());
 	}
 
 }
