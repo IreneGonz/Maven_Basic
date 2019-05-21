@@ -3,13 +3,27 @@ package pruebas;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CopiaProb {
 	public static void main(String[] args) {
-		// El 200 es el oxigeno necesario en el segundo caso
-		problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000", "50 300", "50 5000", "200", "3",
-				"100 1000", "60 300", "50 300"))).toArray();
+		// problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000", "50
+		// 300", "50 5000", "200", "3",
+		// "100 1000", "60 300", "50 300"))).toArray();
+
+		// Este caso deberia pararse en comprobarProbE(entrada) porque esta mal
+		// pasado->le paso menos naves de las que le indico
+		// no sale bien
+		problemaE(new ArrayList<>(
+				Arrays.asList("2", "100", "3", "100 1000", "50 300", "50 5000", "200", "3", "100 1000", "60 300")))
+						.toArray();
+
+		// Esto deberia hacerlo porque esta bien pasado
+//		problemaE(new ArrayList<>(Arrays.asList("3", "100", "3", "100 1000", "50 300", "50 5000", "200", "3",
+//				"100 1000", "60 300", "50 300", "100", "2", "100 2000", "150 500"))).toArray();
 
 	}
 
@@ -17,11 +31,10 @@ public class CopiaProb {
 		// Muy cutre pero no se me ocurre nada mas de momento
 		ArrayList salida = new ArrayList();
 		System.out.println(entrada);
-		System.out.println();
 
-		if (!entrada.isEmpty() && (comprobarProbE(entrada))) {
+		if (!entrada.isEmpty() && (comprobarProbE2(entrada))) { // Cuidado con comprobarProbE2 no E
 			int totalCasos = Integer.parseInt(entrada.get(0));
-			int casoActual = 1; // Lo dejo como 0 o como 1? Si lo pongo como 1 en el while sera <=
+			int casoActual = 1;
 			int datoActual = 1;
 
 			while (casoActual <= totalCasos) {
@@ -29,31 +42,17 @@ public class CopiaProb {
 				datoActual++;
 				int totalNaves = Integer.parseInt(entrada.get(datoActual));
 				datoActual++;
-				// int oxiPes[][] = new int[totalNaves][2];
 
 				List<String> datosNaves = new ArrayList<String>();
 
 				for (int i = 0; i < totalNaves; i++) {
 					datosNaves.add(entrada.get(datoActual));
-					// String c[] = entrada.get(datoActual).split(" ");
-					// for (int j = 0; j < c.length; j++) {
-					// datosNaves.add(c[j]);
-					// }
 					datoActual++;
 				}
 
-				// for (int i = 0, x = 0; i < oxiPes.length; i++) {
-				// for (int j = 0; j < oxiPes[i].length; j++) {
-				// oxiPes[i][j] = Integer.parseInt(datosNaves.get(x));
-				// x++;
-				// }
-				// }
 				System.out.println("Caso actual: " + casoActual + " Oxigeno necesario: " + oxigenoMin + " N� naves: "
 						+ totalNaves + " Oxigeno-Peso: " + datosNaves);
-				// Esta el vector cargado con el peso de las naves y el oxigeno, falta comprobar
-				// cual es mejor y ordenarlos
 				comprobarNaves(oxigenoMin, datosNaves, casoActual, salida);
-				System.out.println();
 
 				casoActual++;
 			}
@@ -63,74 +62,182 @@ public class CopiaProb {
 	}
 
 	private static void comprobarNaves(int oxigenoMin, List<String> datosNaves, int casoActual, ArrayList salida) {
-		// List definitiva = new ArrayList();
 		salida.add("Caso " + casoActual + ":");
-		System.out.println("Antes " + datosNaves);
-		// Ordena las naves de mayor a menor?
-		// No tengo ni idea de como funcionaba esto, tenia mas logica antes
-		Collections.sort(datosNaves);
-		// System.out.println("Despues " + datosNaves);
-		String aux[][] = new String[datosNaves.size()][2];
-		int oxiPeso[][] = new int[datosNaves.size()][2];
+		Collections.sort(datosNaves, new Comparator<String>() {
+			@Override
+			public int compare(String o1, String o2) {
+				int oxi1 = Integer.valueOf(o1.split(" ")[0]);
+				int peso1 = Integer.valueOf(o1.split(" ")[1]);
+				int oxi2 = Integer.valueOf(o2.split(" ")[0]);
+				int peso2 = Integer.valueOf(o2.split(" ")[1]);
 
-		for (int i = 0; i < datosNaves.size(); i++) {
-			aux[i] = datosNaves.get(i).split(" ");
-			// if (aux[i][0].equals(String.valueOf(oxigenoMin))) {
-			// System.out.println("Aqui hay oxigeno suficiente");
-			// }
-		}
-		for (int i = 0; i < aux.length; i++) {
-			for (int j = 0; j < aux[i].length; j++) {
-				oxiPeso[i][j] = Integer.parseInt(aux[i][j]);
-			}
-		}
-		int datosBlanco = 0;
-		while (datosBlanco < datosNaves.size()) { // Hace falta esto?
-			int posMax = 0;
-			int noMinOx[][] = new int[datosNaves.size()][2];
-			// Este tamaño esta mal puesto, no es asi
-			for (int i = 0; i < aux.length; i++) {
-				if (oxiPeso[i][0] >= oxigenoMin && (oxiPeso[i][0] >= oxiPeso[posMax][0]
-						|| (oxiPeso[i][0] == oxiPeso[posMax][0] && oxiPeso[i][1] < oxiPeso[posMax][1]))) {
-					// Si alcanza o supera el oxigenoMinimo y tiene mas oxigeno que la entrada en
-					// posicion posMax o si tienen la misma cantidad de osxigeno pero la primera
-					// nave pesa menos que la otra->entra
-					salida.add(aux[i][0] + " " + aux[i][1]);
-					// A la lista definitiva hay que meterle los numeros separados por espacios
-					oxiPeso[i][0] = 0;
-					oxiPeso[i][1] = 0;
-					posMax = i; // Creo que esto tiene que estar
-					datosBlanco++;
-					// Falta otro else if? que tenga en cuenta si alcanza el O2 necesario pero no es
-					// mejor que la mejor entrada en la lista definitiva
-				} else if (oxiPeso[i][0] < oxigenoMin && oxiPeso[i][0] != 0) {
-					// Si no alcanza el oxigeno minimo
-					// System.out.println(oxiPeso[i][0] + "-" + oxiPeso[i][1]);
-					// Meter estos datos en otra tabla/lista y pasar estos datos a 0?
-					noMinOx[i][0] = oxiPeso[i][0];
-					oxiPeso[i][0] = 0;
-					noMinOx[i][1] = oxiPeso[i][1];
-					oxiPeso[i][1] = 0;
-					datosBlanco++;
+				if (oxi1 >= oxigenoMin && oxi2 >= oxigenoMin) {
+					if (oxi1 > oxi2) {
+						return -1;
+					} else if (oxi1 < oxi2) {
+						return 1;
+					} else if (oxi1 == oxi2) {
+						if (peso1 < peso2) {
+							return -1;
+						} else if (peso1 > peso2) {
+							return 1;
+						} else if (peso1 == peso2) {
+							return 0;
+						}
+					}
+				} else if (oxi1 < oxigenoMin || oxi2 < oxigenoMin) {
+					if (oxi1 >= oxigenoMin) {
+						return -1;
+					} else if (oxi2 >= oxigenoMin) {
+						return 1;
+					} else if (oxi1 < oxigenoMin && oxi2 < oxigenoMin) {
+						if (peso1 > peso2) {
+							return 1;
+						} else if (peso1 == peso2) {
+							if (oxi1 > oxi2) {
+								return -1;
+							} else {
+								return 1;
+							}
+						} else {
+							return -1;
+						}
+					} else if (oxi1 == oxi2) {
+						if (peso1 > peso2) {
+							return 1;
+						} else if (peso1 < peso2) {
+							return -1;
+						} else if (peso1 == peso2) {
+							if (oxi1 > oxi2) {
+								return -1;
+							} else if (oxi1 < oxi2) {
+								return 1;
+							}
+						}
+					}
 				}
+				return 0;
 			}
-			// Aqui tengo que hacer algo con los datos que tengo en noMinOx NO ESTA BIEN
-			// HECHO EL TAMAÑO
-			for (int i = 0; i < noMinOx.length; i++) {
-				// System.out.println(noMinOx[i][0] + "-" + noMinOx[i][1]);
+		});
+		for (int i = 0; i < datosNaves.size(); i++) {
+			salida.add(datosNaves.get(i));
+		}
+	}
+
+	private static boolean comprobarProbE2(List<String> entrada) {
+		int totalCasos = Integer.parseInt(entrada.get(0));
+		int condiciones = 0;
+		int oxigenoMinimo = 0;
+		int numNaves = 0;
+		int casoActual = 0;
+		int datoActual = 1; // Esto se que esta mal
+		if ((totalCasos >= 1 && totalCasos <= 3) && (entrada.size() >= (totalCasos * 2) + 1)) {
+			while (casoActual < totalCasos) {
+				condiciones++;
+				// System.out.println(condiciones + "-" + datoActual + "-" +
+				// entrada.get(datoActual));
+				// Comprobar oxigenoMinimo
+				// System.out.println(condiciones + "-" + datoActual + "-" +
+				// entrada.get(datoActual));
+				if (Integer.parseInt(entrada.get(datoActual)) >= 1
+						&& Integer.parseInt(entrada.get(datoActual)) <= 100000) {
+					oxigenoMinimo = Integer.parseInt(entrada.get(datoActual));
+					datoActual++;
+					condiciones++;
+					// Comprobar el numero de naves
+					if (Integer.parseInt(entrada.get(datoActual)) >= 1
+							&& Integer.parseInt(entrada.get(datoActual)) <= 50000) {
+						// datoActual++;
+						condiciones++;
+						numNaves = Integer.parseInt(entrada.get(datoActual));
+
+						// System.out.println("cond antes " + condiciones);
+						for (int i = 0; i < numNaves; i++) {
+							// System.out.println(i);
+							datoActual++;
+							if (entrada.get(datoActual).contains(" ") && comprobarNaves(entrada.get(datoActual))) {
+								// Si contiene " " y las naves tienen bien los datos de oxigeno y peso
+								condiciones++;
+							}
+						}
+					}
+				}
+				casoActual++;
+				datoActual++;
+			}
+			// System.out.println(totalCasos * 3 + "-" + (entrada.size() - 1));
+			// System.out.println((totalCasos * 3) + (numNaves * 2));
+			// System.out.println(totalCasos);
+			// System.out.println(condiciones + "-" + (entrada.size() + totalCasos - 1));
+			System.out.println(entrada.size() + 2);
+			if (condiciones == entrada.size() + totalCasos - 1) {
+				return true;
 			}
 		}
-		System.out.println("salgo del bucle");
-
-		// Una posibilidad era usar TreeMap pero no deja repetir nunca el primer numero
-		// HashMap<Integer, Integer> map = new HashMap<>();
-		// map.put(oxiPeso[i][0], oxiPeso[i][1]);
-		// TreeMap<Integer, Integer> treeMap = new TreeMap<>(map);
+		return false;
 	}
 
 	private static boolean comprobarProbE(List<String> entrada) {
-		// TODO Auto-generated method stub
-		return true;
+		int totalCasos = Integer.parseInt(entrada.get(0));
+		int condiciones = 0;
+		int oxigenoMinimo = 0;
+		int numNaves = 0;
+		int casoActual = 0;
+		if ((totalCasos >= 1 && totalCasos <= 3) && (entrada.size() >= (totalCasos * 2) + 1)) {
+			while (casoActual < totalCasos) {
+				int datoActual = 1; // Esto se que esta mal
+				condiciones++;
+				// System.out.println(condiciones + "-" + datoActual + "-" +
+				// entrada.get(datoActual));
+				// Comprobar oxigenoMinimo
+				System.out.println(condiciones + "-" + datoActual + "-" + entrada.get(datoActual));
+				if (Integer.parseInt(entrada.get(datoActual)) >= 1
+						&& Integer.parseInt(entrada.get(datoActual)) <= 100000) {
+					oxigenoMinimo = Integer.parseInt(entrada.get(datoActual));
+					datoActual++;
+					condiciones++;
+					// Comprobar el numero de naves
+					if (Integer.parseInt(entrada.get(datoActual)) >= 1
+							&& Integer.parseInt(entrada.get(datoActual)) <= 50000) {
+						// datoActual++;
+						condiciones++;
+						numNaves = Integer.parseInt(entrada.get(datoActual));
+
+						// System.out.println("cond antes " + condiciones);
+						for (int i = 0; i < numNaves; i++) {
+							// System.out.println(i);
+							datoActual++;
+							if (entrada.get(datoActual).contains(" ") && comprobarNaves(entrada.get(datoActual))) {
+								// Si contiene " " y las naves tienen bien los datos de oxigeno y peso
+								condiciones++;
+							}
+							// System.out.println("condiciones mientr "+condiciones);
+						}
+						// System.out.println("condiciones desp " + condiciones);
+					}
+				}
+				// System.out.println(condiciones);
+				// numCasos+numCasos*oxigeno +
+				// numCasos*oxigeno+numnaves*2
+				casoActual++;
+			}
+			// System.out.println(totalCasos * 3 + "-" + (entrada.size() - 1));
+			// System.out.println((totalCasos * 3) + (numNaves * 2));
+			System.out.println(condiciones + "-" + entrada.size());
+			if (condiciones == entrada.size() - 1) {
+				return true;
+			}
+		}
+		return false;
 	}
 
+	private static boolean comprobarNaves(String string) {
+		// System.out.println(string);
+		String aux[] = string.split(" ");
+		if ((Integer.parseInt(aux[0]) >= 1 && Integer.parseInt(aux[0]) <= 100000)
+				&& (Integer.parseInt(aux[1]) >= 1 && Integer.parseInt(aux[1]) <= 100000)) {
+			return true;
+		}
+		return false;
+	}
 }

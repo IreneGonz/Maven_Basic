@@ -1,353 +1,121 @@
 package pruebas;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Programame2 {
 
 	public static void main(String[] args) {
-
+		problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000", "50 300", "50 5000", "200", "3",
+				"100 1000", "60 300", "50 300"))).toArray();
 	}
 
-	public static List<String> problemaD2(List<String> entrada) { // Otra prueba más
+	public static List<String> problemaE(List<String> entrada) {
 		// Muy cutre pero no se me ocurre nada mas de momento
-		boolean over = false, lost = false;
 		ArrayList salida = new ArrayList();
 		System.out.println(entrada);
+		System.out.println();
 
-		if (!entrada.isEmpty()) {
-			// Primero llamar a un metodo que compruebe que hay suficientes datos y que
-			// todos estan correctos
+		if (!entrada.isEmpty() && (comprobarProbE(entrada))) {
 			int totalCasos = Integer.parseInt(entrada.get(0));
-			int casoActual = 0; // Lo dejo como 0 o como 1? Si lo pongo como 1 en el while sera <=
+			int casoActual = 1;
 			int datoActual = 1;
-			while (casoActual < totalCasos) {
-				int habitaciones = Integer.parseInt(entrada.get(datoActual));
+
+			while (casoActual <= totalCasos) {
+				int oxigenoMin = Integer.parseInt(entrada.get(datoActual));
 				datoActual++;
-				int conexionesEntreHabitaciones = Integer.parseInt(entrada.get(datoActual));
-				if (casoActual == 1) {
-				}
+				int totalNaves = Integer.parseInt(entrada.get(datoActual));
 				datoActual++;
 
-				List<String> aux = new ArrayList<String>();
-				for (int i = 0; i < conexionesEntreHabitaciones; i++) {
-					String c[] = entrada.get(datoActual).split(" ");
-					for (int j = 0; j < c.length; j++) {
-						aux.add(c[j]);
-					}
-					if (casoActual == 1) {
-						// System.out.println(entrada.get(datoActual));
-					}
+				List<String> datosNaves = new ArrayList<String>();
+
+				for (int i = 0; i < totalNaves; i++) {
+					datosNaves.add(entrada.get(datoActual));
 					datoActual++;
 				}
-				// Hago esto para guardar las habitaciones conectadas de esta forma:
-				// 1 2 La habitacion 1 esta conectada con la 2
-				// 3 4 La habitacion 3 esta conectada con la 4
-				int habitacionesConectadas[][] = new int[conexionesEntreHabitaciones][2];
-				for (int i = 0, x = 0; i < habitacionesConectadas.length; i++) {
-					for (int j = 0; j < habitacionesConectadas[i].length; j++) {
-						habitacionesConectadas[i][j] = Integer.parseInt(aux.get(x));
-						x++;
-					}
-				}
-				// Esto se puede borrar, es solo para imprimirmelo por pantalla
-				List<Integer> habsConec = new ArrayList<Integer>();
-				for (int i = 0; i < habitacionesConectadas.length; i++) {
-					for (int j = 0; j < habitacionesConectadas[i].length; j++) {
-						habsConec.add(habitacionesConectadas[i][j]);
-					}
-				} // Esto se puede borrar, es solo para imprimirmelo por pantalla
 
-				// Aquí compruebo que se guardan bien las habitaciones conectadas en plan:
-				// 1 2 La habitacion 1 esta conectada con la 2
-				// 3 4 La habitacion 3 esta conectada con la 4
-				for (int i = 0; i < habitacionesConectadas.length; i++) {
-					for (int j = 0; j < habitacionesConectadas[i].length; j++) {
-						// System.out.println(habitacionesConectadas[i][j] + " i: " + i + " j: " + j);
-					}
-				}
-				// Los pasos pueden ir sueltos o separados por comas
-				// (En principio no hay que poner datoActual++)
-				String pAux[] = entrada.get(datoActual).split(",");
-				List<Integer> pasos = new ArrayList<Integer>();
-				for (int i = 0; i < pAux.length; i++) {
-					pasos.add(Integer.parseInt(pAux[i]));
-				}
-				datoActual++;
+				System.out.println("Caso actual: " + casoActual + " Oxigeno necesario: " + oxigenoMin + " N� naves: "
+						+ totalNaves + " Oxigeno-Peso: " + datosNaves);
+				comprobarNaves(oxigenoMin, datosNaves, casoActual, salida);
+				System.out.println();
 
-				if (datosCorrectos(totalCasos, habitaciones, conexionesEntreHabitaciones,
-						habitacionesConectadas.length)) {
-					System.out.println(habitacionesConectadas.length);
-					// Comprobar si GAME OVER, PERDIDO, VICTORIA
-					// Muy cutre pero de momento no tengo mas ideas
-					if (comprobarGameOver(habitacionesConectadas, pasos, salida) == 1) {
-						over = true;
-					}
-					if (!over) {
-						if (comprobarPerdidoVictoria(habitaciones, pasos, salida) == 1) {
-							lost = true;
-						}
-					}
-					System.out
-							.println("Habitaciones: " + habitaciones + " Num conexiones: " + conexionesEntreHabitaciones
-									+ " Habitaciones conectadas: " + habsConec + " Pasos: " + pasos);
-
-					casoActual++; // Cambiamos de caso cuando cogemos todos los datos
-					over = false;
-					lost = false;
-				}
+				casoActual++;
 			}
 		}
-
 		System.out.println(salida);
 		return salida;
 	}
 
-	private static boolean datosCorrectos(int totalCasos, int habitaciones, int conexionesEntreHabitaciones,
-			int habsConectadasLength) {
-		// TODO Auto-generated method stub
-		if ((totalCasos >= 1 && totalCasos <= 100) && (habitaciones >= 2 && habitaciones <= 40)
-				&& (conexionesEntreHabitaciones >= 1 && conexionesEntreHabitaciones <= 20)
-				&& (conexionesEntreHabitaciones == habsConectadasLength)) {
-			// Comprobar que hay x conexionesEntreHabitaciones-> el vector de conexiones
-			// tiene x de length
-			System.out.println(conexionesEntreHabitaciones + "-" + habsConectadasLength);
-			return true;
-		} else {
-			return false;
-		}
-	}
+	private static void comprobarNaves(int oxigenoMin, List<String> datosNaves, int casoActual, ArrayList salida) {
+		salida.add("Caso " + casoActual + ":");
+		Collections.sort(datosNaves, new Comparator<String>() {
+			@Override
+			public int compare(String o1, String o2) {
+				int oxi1 = Integer.valueOf(o1.split(" ")[0]);
+				int peso1 = Integer.valueOf(o1.split(" ")[1]);
+				int oxi2 = Integer.valueOf(o2.split(" ")[0]);
+				int peso2 = Integer.valueOf(o2.split(" ")[1]);
 
-	private static int comprobarPerdidoVictoria(int habitacionesTotal, List<Integer> pasos, ArrayList salida) {
-		int ultimaHab = 0;
-		for (int i = 0; i < pasos.size(); i++) {
-			if (pasos.get(i) > ultimaHab) {
-				ultimaHab = pasos.get(i);
-			}
-		}
-		if (ultimaHab == habitacionesTotal) {
-			salida.add("VICTORIA");
-		} else {
-			salida.add("PERDIDO");
-		}
-		return 0;
-	}
-
-	public static int comprobarGameOver(int[][] habitacionesConectadas, List<Integer> pasos, ArrayList salida) {
-		int hayConexion = 0;
-		// Pierdes si pasas entre 2 habs que no estan conectadas
-		int habitacionesPasadas[] = new int[pasos.size()];
-		// Hago tantos int n1, n2 y asi como pasos.size(), y cargo cada n1 n2 con el
-		// contenido de pasos.size().get(elQueSea)
-		for (int i = 0; i < pasos.size(); i++) {
-			habitacionesPasadas[i] = pasos.get(i);
-		}
-
-		if (habitacionesPasadas.length - 1 == 0) { // Si solo hay 1 paso
-			int hab1 = 1;
-			int hab2 = habitacionesPasadas[0];
-			for (int j = 0; j < habitacionesConectadas.length; j++) {
-				if ((habitacionesConectadas[j][0] == hab1 && habitacionesConectadas[j][1] == hab2)
-						|| (habitacionesConectadas[j][1] == hab1 && habitacionesConectadas[j][0] == hab2)) {
-					hayConexion++;
-				}
-			}
-		} else if (habitacionesPasadas.length - 1 > 0) {
-			// Si hay más de 1 paso (hago comprobacion de que no esta vacio)
-			for (int i = 0; i < habitacionesPasadas.length; i++) {
-				if (i == 0) {
-					int hab1 = 1;
-					int hab2 = habitacionesPasadas[i];
-					for (int j = 0; j < habitacionesConectadas.length; j++) {
-						// System.out.println(habitacionesConectadas[j][0] + "-" +
-						// habitacionesConectadas[j][1]);
-						// System.out.println("H1-" + hab1 + " H2-" + hab2);
-						if ((habitacionesConectadas[j][0] == hab1 && habitacionesConectadas[j][1] == hab2)
-								|| (habitacionesConectadas[j][1] == hab1 && habitacionesConectadas[j][0] == hab2)) {
-							hayConexion++;
+				if (oxi1 >= oxigenoMin && oxi2 >= oxigenoMin) {
+					if (oxi1 > oxi2) {
+						return -1;
+					} else if (oxi1 < oxi2) {
+						return 1;
+					} else if (oxi1 == oxi2) {
+						if (peso1 < peso2) {
+							return -1;
+						} else if (peso1 > peso2) {
+							return 1;
+						} else if (peso1 == peso2) {
+							return 0;
 						}
 					}
-				} else {
-					int hab1 = habitacionesPasadas[i - 1];
-					int hab2 = habitacionesPasadas[i];
-					for (int j = 0; j < habitacionesConectadas.length; j++) {
-						// System.out.println(habitacionesConectadas[i][0] + "-" +
-						// habitacionesConectadas[i][1]);
-						// System.out.println(hab1 + "-" + hab2);
-						if ((habitacionesConectadas[j][0] == hab1 && habitacionesConectadas[j][1] == hab2)
-								|| (habitacionesConectadas[j][1] == hab1 && habitacionesConectadas[j][0] == hab2)) {
-							hayConexion++;
-						}
-					}
-				}
-			}
-		}
-		if (hayConexion == habitacionesPasadas.length) {
-			// Si hay tatnas conexiones como habitaciones por las que he pasado->no he
-			// perdido
-			return 0;
-		} else {
-			salida.add("GAMEOVER");
-			return 1;
-		}
-	}
-
-	// Original que no va del todo bien (el bucle se lo pasa bastante por el forro)
-	public static void comprobarGameOverOrig(int[][] habitacionesConectadas, List<Integer> pasos, ArrayList salida) {
-		boolean pierdes = false;
-		// Pierdes si pasas entre 2 habs que no estan conectadas
-		int habitacionesPasadas[] = new int[pasos.size()];
-		// Hago tantos int n1, n2 y asi como pasos.size(), y cargo cada n1 n2 con el
-		// contenido de pasos.size().get(elQueSea)
-		for (int i = 0; i < pasos.size(); i++) {
-			habitacionesPasadas[i] = pasos.get(i);
-		}
-		// Tengo que comparar la habitacion actual con la siguiente para saber de que
-		// habitacion a cual va, teniendo en cuenta que empieza desde la habitacion 1
-		// aunque pasos NO tiene la habitacion 1
-		System.out.println("habitacionesPasadas " + habitacionesPasadas.length);
-		for (int i = 0; i < habitacionesPasadas.length; i++) { // habitacionesPasadas.length-1
-			// if(!pierdes)?
-			if (i == 0) {
-				System.out.println("i == 0");
-				int hab1 = 1;
-				int hab2 = habitacionesPasadas[i];
-				for (int a = 0; a < habitacionesConectadas.length; a++) {
-					// System.out.println(habitacionesConectadas[i][0] + "-" +
-					// habitacionesConectadas[i][1]);
-					// System.out.println(hab1 + "-" + hab2);
-					if (!((habitacionesConectadas[a][0] == hab1 && habitacionesConectadas[a][1] == hab2)
-							|| (habitacionesConectadas[a][1] == hab1 && habitacionesConectadas[a][0] == hab2))) {
-						salida.add("GAMEOVER");
-						// pierdes=false; ?
-						break;
-					}
-				}
-			} else {
-				System.out.println("i != 0");
-				int hab1 = habitacionesPasadas[i];
-				int hab2 = habitacionesPasadas[i + 1];
-				for (int a = 0; a < habitacionesConectadas.length; a++) {
-					System.out.println("b");
-					// System.out.println(habitacionesConectadas[i][0] + "-" +
-					// habitacionesConectadas[i][1]);
-					// System.out.println(hab1 + "-" + hab2);
-					if (!((habitacionesConectadas[a][0] == hab1 && habitacionesConectadas[a][1] == hab2)
-							|| (habitacionesConectadas[a][1] == hab1 && habitacionesConectadas[a][0] == hab2))) {
-						salida.add("GAMEOVER");
-						break;
-					}
-				}
-			}
-			i++;
-			System.out.println(i);
-		}
-		// for (int i = 0; i < habitacionesConectadas.length; i++) {
-		// for (int j = 0; j < habitacionesConectadas[i].length; j++) {
-		// }
-		// }
-	}
-
-	public static List<String> problemaD(List<String> entrada) { // Original
-		ArrayList salida = new ArrayList();
-		System.out.println(entrada);
-
-		if (!entrada.isEmpty()) {
-			int totalCasos = Integer.parseInt(entrada.get(0));
-			int casoActual = 0; // Lo dejo como 0 o como 1? Si lo pongo como 1 en el while sera <=
-			int datoActual = 1;
-			while (casoActual < totalCasos) {
-				// Solo hay 1 linea con habitaciones
-				int habitaciones = Integer.parseInt(entrada.get(datoActual));
-				datoActual++;
-				// Linea con el numero de conexiones que hay entre habitaciones
-				int conexHab = Integer.parseInt(entrada.get(datoActual));
-
-				// String habitacionesConectadas[] = new String[conexHab * 2];
-				// List<String> habitacionesConectadas = new ArrayList<String>();
-
-				// String conexionesString[] = new String[conexHab * 2];
-				List<String> conexionesString = new ArrayList();
-				// int conexionesInt[] = new int[conexHab * 2];
-				List<Integer> conexionesInt = new ArrayList();
-				// Es *2 porque siempre va a ser par
-				// System.out.println(conexiones2.length);
-				datoActual++;
-				// System.out.println(entrada.get(datoActual));
-				// System.out.println("Conexiones String/2: " + conexHab / 2);
-				for (int i = 0; i < conexHab; i++) {
-					String[] aux = entrada.get(datoActual).split(" ");
-					conexionesInt.add(Integer.parseInt(aux[0]));
-					conexionesInt.add(Integer.parseInt(aux[1]));
-					// System.out.println(aux[0] + "-" + aux[1]);
-					// datoActual++;
-					// Esto de arriba no estaría del todo bien, llegaría un punto en el que te
-					// quedarías sin datos
-					// Igual se podria hacer que si se puede hacer split(" ") que sume datoActual,
-					// y si no no?
-					// Esto de abajo no serviria porque si no hay espacios no se hara el split, se
-					// guardará el string tal cual
-					// if (entrada.get(datoActual).split(" ") != null)
-					// Así funciona bien (o por lo menos mejor)
-					if (entrada.get(datoActual + 1).contains(" ")) { // Y si comparo con datoActual+1?
-						datoActual++;
-					}
-				}
-				// Ahora tocan los pasos que se realizan, que pueden ir separados por comas o
-				// ser un unico numero
-				ArrayList<Integer> pasos = new ArrayList<Integer>(); // Los metere ya como int para que sea mas facil
-				datoActual++;
-				String aux[] = entrada.get(datoActual).split(",");
-				// En el ultimo caso el 1 2 o 12 llega hasta aquí y NO DEBERIA
-				// Coge 12 como que es un paso pero es parte de las conexiones entre
-				// habitaciones, estará mal en el paso anterior
-				// System.out.println(casoActual + "-" + conexionesList.size());
-
-				// System.out.println(casoActual + "-" + conexionesList);
-				// System.out.println(datoActual + "-" + aux[0]);
-
-				for (int i = 0; i < aux.length; i++) {
-					pasos.add(Integer.parseInt(aux[i]));
-				}
-				// Aquí tenemos que calcular si es VICTORIA, GAME OVER o PERDIDO (en orden
-				// contrario pero es la idea)
-				// System.out.println(pasos.size());
-				for (int i = 0; i < pasos.size(); i++) {
-					if (pasos.size() == 1) {
-						int num1 = pasos.get(0);
-						if (conexionesInt.contains(num1) && pasos.contains(habitaciones)) {
-							salida.add("VICTORIA");
-							break;
+				} else if (oxi1 < oxigenoMin || oxi2 < oxigenoMin) {
+					if (oxi1 >= oxigenoMin) {
+						return -1;
+					} else if (oxi2 >= oxigenoMin) {
+						return 1;
+					} else if (oxi1 < oxigenoMin && oxi2 < oxigenoMin) {
+						if (peso1 > peso2) {
+							return 1;
+						} else if (peso1 == peso2) {
+							if (oxi1 > oxi2) {
+								return -1;
+							} else {
+								return 1;
+							}
 						} else {
-							salida.add("GAME OVER");
-							break;
+							return -1;
 						}
-
-					} else {
-						int num1 = pasos.get(0);
-						int num2 = pasos.get(1);
-
-						if (conexionesInt.contains(num1) && conexionesInt.contains(num2)) {
-							salida.add("VICTORIA");
-							break;
-						}
-						if (pasos.contains(habitaciones)) {
-							salida.add("GAME OVER");
-							break;
+					} else if (oxi1 == oxi2) {
+						if (peso1 > peso2) {
+							return 1;
+						} else if (peso1 < peso2) {
+							return -1;
+						} else if (peso1 == peso2) {
+							if (oxi1 > oxi2) {
+								return -1;
+							} else if (oxi1 < oxi2) {
+								return 1;
+							}
 						}
 					}
 				}
-
-				System.out.println("Habitaciones: " + habitaciones + " Num conexiones: " + conexHab
-						+ " Habitaciones conectadas: " + conexionesInt + " Pasos: " + pasos);
-
-				datoActual++;
-				casoActual++; // Cambiamos de caso cuando cogemos todos los datos
+				return 0;
 			}
+		});
+		for (int i = 0; i < datosNaves.size(); i++) {
+			salida.add(datosNaves.get(i));
 		}
+	}
 
-		System.out.println(salida);
-		return salida;
+
+	private static boolean comprobarProbE(List<String> entrada) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }
