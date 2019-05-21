@@ -8,80 +8,45 @@ import java.util.List;
 
 public class Programame {
 
-	public static void main(String[] args) {
-		// Arreglar problemaB -> me coge el 6 como una entrada mas, no como el numero de
-		// entradas
-		// problemaB(new ArrayList<>(Arrays.asList("6", "Polonio", "TT", "RADIO",
-		// "helio", "BeCeRRo", "AHA"))).toArray();
-		// problemaC(new ArrayList<>(Arrays.asList("3", "100", "137", "7"))).toArray();
-
-		problemaD(new ArrayList<>(
-				Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
-						.toArray();
-	}
-
 	public static List<String> problemaA(List<String> entrada) {
 		ArrayList salida = new ArrayList<>();
 		System.out.println(entrada);
 
 		int entradaActual = 1;
-
+		// Compruebo que la lista no este vacia y tenga tantos casos de prueba como se
+		// indican en la entrada, asi como si los numeros que se pasan estan dentro del
+		// rango correcto
 		if ((!entrada.isEmpty() && entrada.size() - 1 == Integer.parseInt(entrada.get(0))
 				&& comprobarProbA(entrada, entradaActual))) {
+			// Recorro la entrada tantas veces como casos de prueba haya
 			while (entradaActual <= Integer.parseInt(entrada.get(0))) {
 				String actual[] = entrada.get(entradaActual).split(" ");
-				// System.out.println(2 + Integer.parseInt(new String("+") + 3));
-				// if (actual.length == 3) {
+				// Una vez hecho el split los numeros estan en la posicion 0 y 2, mientras que
+				// el signo esta en la posicion 1
 				int n1 = Integer.parseInt(actual[0]);
 				int n2 = Integer.parseInt(actual[2]);
-				// if ((Integer.parseInt(actual[0]) >= -10000 && Integer.parseInt(actual[0]) <=
-				// 10000)
-				// && (Integer.parseInt(actual[2]) >= -10000 && Integer.parseInt(actual[2]) <=
-				// 10000)) {
-				// if ((n1 >= -10000 && n1 <= 10000) && (n2 >= -10000 && n2 <= 10000)) {
 				switch (actual[1]) {
 				case "+":
 					salida.add(String.valueOf(n1 + n2));
-					// salida.add(n1 + n2);
-					// System.out.println(num1 + num2);
 					break;
 				case "-":
 					salida.add(String.valueOf(n1 - n2));
-					// salida.add(n1 - n2);
-					// System.out.println(num1 - num2);
 					break;
 				case "/":
 					if (n2 != 0) {
 						salida.add(String.valueOf(n1 / 2));
-						// salida.add(n1 / n2);
-						// System.out.println(num1 / num2);
 					} else {
 						salida.add("ERROR");
-						// System.out.println("ERROR");
 					}
 					break;
 				case "*":
 					salida.add(String.valueOf(n1 * n2));
-					// salida.add(n1 * n2);
-					// System.out.println(num1 * num2);
 					break;
 				}
-				// }
-				// }
 				entradaActual++;
 			}
-			System.out.println(salida);
-			return salida;
-
-		} else {
-			// Excepción si no
-			// try {
-			// throw new Exception("No hay tantos datos como casos de prueba");
-			// } catch (Exception e) {
-			// e.printStackTrace();
-			// }
-			return salida;
 		}
+		return salida;
 	}
 
 	private static boolean comprobarProbA(List<String> entrada, int entradaActual) {
@@ -89,6 +54,8 @@ public class Programame {
 		int n1 = 0, n2 = 0;
 		boolean numAdecuado = false;
 		String actual[] = entrada.get(entradaActual).split(" ");
+		// El dato tiene que tener una longitud de 3 una vez se haya hecho el split,
+		// porque hay 2 numeros y un signo
 		if (actual.length == 3) {
 			n1 = Integer.parseInt(actual[0]);
 			n2 = Integer.parseInt(actual[2]);
@@ -96,11 +63,14 @@ public class Programame {
 		if ((n1 >= -10000 && n1 <= 10000) && (n2 >= -10000 && n2 <= 1000)) {
 			numAdecuado = true;
 		}
+		// Compruebo que no falten o sobren espacios
 		for (int i = 0; i < entrada.size(); i++) {
 			if (entrada.get(i).contains(" ")) {
 				espacios++;
 			}
 		}
+		// Si no sobran ni faltan espacios y los numeros estan dentro del rango
+		// requerido, el caso esta bien, se puede ejecutar el resto del codigo
 		if ((entrada.size() - 1 == espacios) && numAdecuado) {
 			return true;
 		}
@@ -111,11 +81,10 @@ public class Programame {
 		ArrayList salida = new ArrayList<>();
 		System.out.println(entrada);
 
-		// for(int i=0; i<entrada.size(); i++)
-		// if (!entrada.isEmpty() && entrada.size() - 1 ==
-		// Integer.parseInt(entrada.get(0))) {
+		// Si la entrada no esta vacia y los datos se han pasado de forma correcta se
+		// ejecuta el codigo
 		if (!entrada.isEmpty() && comprobarProbB(entrada)) {
-			// for (String palabraActual : entrada) { // Recorro la lista de entrada
+			// Recorro la lista de entrada
 			for (int j = 1; j < entrada.size(); j++) {
 				// if(no es un numero??
 				String palabraActual = entrada.get(j);
@@ -149,16 +118,19 @@ public class Programame {
 	}
 
 	private static boolean comprobarProbB(List<String> entrada) {
-		// (usar los métodos de abajo y despues quitarlos del problemaC)
 		int totalCasos = Integer.parseInt(entrada.get(0));
 		int palabraBien = 0;
+		// Compruebo si el numero de casos esta bien pasado y el tamaño de la entrada
+		// coincide con ese numero total de casos
 		if ((totalCasos >= 1 && totalCasos <= 10000) && (entrada.size() - 1 == totalCasos)) {
 			for (int i = 1; i < entrada.size(); i++) {
+				// Compruebo palabra por palabra si cumple con unos requisitos
 				if (palabraCorrecta(entrada.get(i))) {
 					palabraBien++;
 				}
 			}
 		}
+		// Se comprueba si hay tantas palabras bien pasadas como casos de prueba
 		if (palabraBien == entrada.size() - 1) {
 			return true;
 		}
@@ -167,6 +139,8 @@ public class Programame {
 	}
 
 	private static boolean palabraCorrecta(String palabra) {
+		// Si la palabra no es un numero, no tiene unicamente vocales y su tamaño esta
+		// dentro del rango adecuado, la palabra esta bien
 		if (!palabra.matches(".*\\d.*") && !soloVocales(palabra) && palabra.length() <= 1000) {
 			return true;
 		} else {
@@ -175,12 +149,14 @@ public class Programame {
 	}
 
 	private static boolean soloVocales(String palabra) {
-		// Primero tengo que pasar toda la palabra a minus
+		// Primero paso la palabra a minusculas porque luego es mas sencillo
 		palabra = palabra.toLowerCase();
 		int voc = 0;
 		for (int i = 0; i < palabra.length(); i++) {
 			if (palabra.charAt(i) == 'a' || palabra.charAt(i) == 'e' || palabra.charAt(i) == 'i'
 					|| palabra.charAt(i) == 'o' || palabra.charAt(i) == 'u') {
+				// Recorro la palabra, y si se encuentra una vocal, sumo 1 a la cantidad de
+				// vocales que tiene la palabra
 				voc++;
 			}
 		}
@@ -194,8 +170,11 @@ public class Programame {
 	}
 
 	private static boolean letraRepetida(String palabra) {
+		// Compruebo si hay letras repetidas dentro de una misma palabra
 		int cantidad = 0;
 		for (int i = 0, x = 1; i < palabra.length() - 1; i++, x++) {
+			// Recorro la palabra comparando el char en una posicion i con la posicion
+			// siguiente, y si coinciden, la letra se repite
 			if (palabra.charAt(i) == palabra.charAt(x)) {
 				cantidad++;
 			}
@@ -210,27 +189,24 @@ public class Programame {
 
 	public static List<String> problemaC(List<String> entrada) {
 		ArrayList salida = new ArrayList();
-		// System.out.println(entrada);
 
 		if (!entrada.isEmpty() && comprobarProbC(entrada)) {
-
-			// int entradaActual = 1;
 			for (int i = 1; i < entrada.size(); i++) {
-				// for (String numeroActual : entrada) {// Trabajamos de numero en numero, uno
-				// por uno
-				// Comprobar que sea un numero entero y no un decimal
 				int num = Integer.parseInt(entrada.get(i));
-				// int num = Integer.parseInt(numeroActual);
-				int numero = 2;
+				int numero = 3;
 				int primos = 0;
-				while (numero <= num) { // Tiene que ir desde 2 (el 1 no cuenta) hasta el numero que sea
+
+				// Voy desde el numero 3 (porque el 1 no cuenta y el 2 no es primo) hasta llegar
+				// al numero con el que estoy trabajando
+				while (numero <= num) {
 					if (numPrimo(numero) && empiezaUno(numero)) {
+						// Si ese numero es primo y ademas empieza en uno, el numero actual con el que
+						// se esta trabajando tiene x numeros primos +1
 						primos++;
 					}
 					numero++;
 				}
-				salida.add(String.valueOf(primos)); // Espera recibir un String y no un int
-				// salida.add(primos);
+				salida.add(String.valueOf(primos));
 				primos = 0;
 			}
 		}
@@ -240,9 +216,11 @@ public class Programame {
 
 	private static boolean comprobarProbC(List<String> entrada) {
 		System.out.println(entrada);
-		int totalCasosPrueba = Integer.parseInt(entrada.get(0)); // >=1 <=100
+		int totalCasosPrueba = Integer.parseInt(entrada.get(0));
 		int numeros = 0;
 
+		// Compruebo que tanto el numero total de casos de prueba como los numeros que
+		// se pasan en la entrada entren dentro del rango
 		if ((totalCasosPrueba >= 1 && totalCasosPrueba <= 100) && (totalCasosPrueba == entrada.size() - 1)) {
 			for (int i = 0; i < totalCasosPrueba; i++) {
 				if (Integer.parseInt(entrada.get(i)) >= 1 && Integer.parseInt(entrada.get(i)) <= 2000000) {
@@ -250,6 +228,8 @@ public class Programame {
 				}
 			}
 		}
+		// Si coinciden la cantidad de numeros que estan bien con el numero total de
+		// casos de prueba, la entrada es correcta
 		if (totalCasosPrueba == numeros) {
 			return true;
 		} else {
@@ -258,6 +238,8 @@ public class Programame {
 	}
 
 	private static boolean empiezaUno(int numero) {
+		// Si el rango de posiciones 0 a 1 dentro del numero es 1, ese numero empieza
+		// por 1
 		if (Integer.parseInt(Integer.toString(numero).substring(0, 1)) == 1) {
 			return true;
 		}
@@ -266,12 +248,16 @@ public class Programame {
 
 	private static boolean numPrimo(int numero) {
 		int cont = 0;
+		// Comienzo en 1 hasta llegar al numero que quiero, cada vez que al dividir el
+		// numero original por i da 0, se suma uno a un contador
 		for (int i = 1; i <= numero; i++) {
 			if (numero % i == 0) {
 				cont++;
 			}
 		}
-		if (cont <= 2) {
+		// Si el numero solo se podia dividir por si mismo y por 1, el numero es primo,
+		// si no, no lo es
+		if (cont == 2) {
 			return true;
 		} else {
 			return false;
@@ -279,34 +265,29 @@ public class Programame {
 	}
 
 	public static List<String> problemaD(List<String> entrada) {
-		// Muy cutre pero no se me ocurre nada mas de momento
-		boolean over = false, lost = false;
+		boolean over = false;
 		ArrayList salida = new ArrayList();
 		System.out.println(entrada);
 
-		if (!entrada.isEmpty() && (comprobarProbD(entrada))) { // comprobarProbD falla
-			// if (!entrada.isEmpty()) {
-			// Primero llamar a un metodo que compruebe que hay suficientes datos y que
-			// todos estan correctos
+		if (!entrada.isEmpty() && (comprobarProbD(entrada))) {
 			int totalCasos = Integer.parseInt(entrada.get(0));
-			int casoActual = 0; // Lo dejo como 0 o como 1? Si lo pongo como 1 en el while sera <=
+			int casoActual = 0;
 			int datoActual = 1;
 			while (casoActual < totalCasos) {
+				// Guardo el numero de habitaciones que hay y el numero de conexiones que hay
+				// entrae habitaciones
 				int habitaciones = Integer.parseInt(entrada.get(datoActual));
 				datoActual++;
 				int conexionesEntreHabitaciones = Integer.parseInt(entrada.get(datoActual));
-				if (casoActual == 1) {
-				}
 				datoActual++;
 
+				// Meto en una lista las habitaciones que hay conectadas, separandolas por el
+				// espacio
 				List<String> aux = new ArrayList<String>();
 				for (int i = 0; i < conexionesEntreHabitaciones; i++) {
 					String c[] = entrada.get(datoActual).split(" ");
 					for (int j = 0; j < c.length; j++) {
 						aux.add(c[j]);
-					}
-					if (casoActual == 1) {
-						// System.out.println(entrada.get(datoActual));
 					}
 					datoActual++;
 				}
@@ -320,24 +301,22 @@ public class Programame {
 						x++;
 					}
 				}
-				// Esto se puede borrar, es solo para imprimirmelo por pantalla
+				// Esto es solo para imprimirmelo por pantalla
 				List<Integer> habsConec = new ArrayList<Integer>();
 				for (int i = 0; i < habitacionesConectadas.length; i++) {
 					for (int j = 0; j < habitacionesConectadas[i].length; j++) {
 						habsConec.add(habitacionesConectadas[i][j]);
 					}
-				} // Esto se puede borrar, es solo para imprimirmelo por pantalla
+				}
 
-				// Aquí compruebo que se guardan bien las habitaciones conectadas en plan:
+				// Aquí compruebo que se guardan bien las habitaciones conectadas asi:
 				// 1 2 La habitacion 1 esta conectada con la 2
 				// 3 4 La habitacion 3 esta conectada con la 4
 				for (int i = 0; i < habitacionesConectadas.length; i++) {
 					for (int j = 0; j < habitacionesConectadas[i].length; j++) {
-						// System.out.println(habitacionesConectadas[i][j] + " i: " + i + " j: " + j);
 					}
 				}
 				// Los pasos pueden ir sueltos o separados por comas
-				// (En principio no hay que poner datoActual++)
 				String pAux[] = entrada.get(datoActual).split(",");
 				List<Integer> pasos = new ArrayList<Integer>();
 				for (int i = 0; i < pAux.length; i++) {
@@ -345,28 +324,18 @@ public class Programame {
 				}
 				datoActual++;
 
-				// Hay que comprobar que los datos esten correctos ANTES siquiera de empezar a
-				// asignar variables
-				// Aka este if sobrara cuando este comprobado
-				if (datosCorrectos(totalCasos, habitaciones, conexionesEntreHabitaciones)) {
-					// Comprobar si GAME OVER, PERDIDO, VICTORIA
-					// Muy cutre pero de momento no tengo mas ideas
-					if (comprobarGameOver(habitacionesConectadas, pasos, salida) == 1) {
-						over = true;
-					}
-					if (!over) {
-						if (comprobarPerdidoVictoria(habitaciones, pasos, salida) == 1) {
-							lost = true;
-						}
-					}
-					System.out
-							.println("Habitaciones: " + habitaciones + " Num conexiones: " + conexionesEntreHabitaciones
-									+ " Habitaciones conectadas: " + habsConec + " Pasos: " + pasos);
-
-					// casoActual++; // Cambiamos de caso cuando cogemos todos los datos
-					over = false;
-					lost = false;
+				// Compruebo si has perdido
+				if (comprobarGameOver(habitacionesConectadas, pasos, salida) == 1) {
+					over = true;
 				}
+				// Si no has perdido es que o te has perdido o has ganado
+				if (!over) {
+					comprobarPerdidoVictoria(habitaciones, pasos, salida);
+				}
+				System.out.println("Habitaciones: " + habitaciones + " Num conexiones: " + conexionesEntreHabitaciones
+						+ " Habitaciones conectadas: " + habsConec + " Pasos: " + pasos);
+
+				over = false;
 				casoActual++;
 			}
 		}
@@ -377,44 +346,41 @@ public class Programame {
 	private static boolean comprobarProbD(List<String> entrada) {
 		int totalCasos = Integer.parseInt(entrada.get(0));
 		int condiciones = 0;
+
+		// Compruebo el numero total de casos y la longitud minima de la entrada
 		if ((totalCasos >= 1 && totalCasos <= 100) && (entrada.size() >= (totalCasos * 4) + 1)) {
-			// Comprobar num casos de prueba y que sea posible que pueda estar bien los
-			// casos, si no, fuera
 			int datoActual = 1;
 			condiciones++;
+
+			// Compruebo las habitaciones
 			if (Integer.parseInt(entrada.get(datoActual)) >= 2 && Integer.parseInt(entrada.get(datoActual)) <= 40) {
-				// Habitaciones comprobadas
 				int habs = Integer.parseInt(entrada.get(datoActual));
 				datoActual++;
 				condiciones++;
+
+				// Compruebo el numero de conexiones entre habitaciones
 				if (Integer.parseInt(entrada.get(datoActual)) >= 1 && Integer.parseInt(entrada.get(datoActual)) <= 20
 						&& Integer.parseInt(entrada.get(datoActual)) >= habs - 1) {
-					// conexiones comprobadas
 					condiciones++;
 
 					for (int i = 0; i < Integer.parseInt(entrada.get(datoActual - 1)); i++) {
-						// System.out.println(i);
 						datoActual++;
 						if (entrada.get(datoActual).contains(" ")
 								&& comprobarConexHabs(entrada.get(datoActual), habs)) {
 							// Si contiene " " y la habitacion dentro del rango de habitaciones que tenemos
 							condiciones++;
-							// Comprobar que cada sala que aparece dentro de las conexiones esta dentro del
-							// numero de habitaciones que tenemos
 						}
 					}
 					datoActual++;
-					// Solo quedan los pasos
+					// Comprobamos los pasos
 					if (entrada.get(datoActual) != null && comprobarPasos(entrada.get(datoActual), habs)) {
 						condiciones++;
-						// Pasos comprobados
 					}
-					// System.out.println(condiciones);
 				}
 			}
 		}
+		// Si todos los datos son correctos, la entrada esta bien
 		if (condiciones == 5) {
-			// if (condiciones == entrada.size()) {
 			return true;
 		} else {
 			return false;
@@ -422,12 +388,12 @@ public class Programame {
 	}
 
 	private static boolean comprobarPasos(String string, int habs) {
-		// Dos posibilidades: que se pueda hacer split con "," o no. En ambos casos
-		// habra que comprobar que el numero este en habs, como en comprobarConexHabs
+		// Los pasos van separados por , o no
 		String aux[] = string.split(",");
 		int aux2[] = new int[aux.length];
 		int coincide = 0;
 
+		// Compruebo que no se de un paso a una habitacion que ni siquiera existe
 		for (int i = 0; i < aux.length; i++) {
 			aux2[i] = Integer.parseInt(aux[i]);
 			for (int j = 1; j <= habs; j++) {
@@ -444,11 +410,12 @@ public class Programame {
 	}
 
 	private static boolean comprobarConexHabs(String string, int habs) {
-		// Comprobar que si hay 3 habitaciones no haya una conexion hab 2 5 por ejemplo
-		// System.out.println(string);
 		int coincide = 0;
+		// Separo las conexiones entre habitaciones por espacios
 		String aux[] = string.split(" ");
 		int aux2[] = new int[aux.length];
+		// Recorro el vector con las conexiones entre habitaciones y compruebo que los
+		// numeros que aparecen ahi coincidan con habitaciones que existan
 		for (int i = 0; i < aux.length; i++) {
 			aux2[i] = Integer.parseInt(aux[i]);
 			for (int j = 1; j <= habs; j++) {
@@ -464,31 +431,20 @@ public class Programame {
 		}
 	}
 
-	private static boolean datosCorrectos(int totalCasos, int habitaciones, int conexionesEntreHabitaciones) {
-		// Esto sobrara cuando el metodo de arriba este bien hecho
-		if ((totalCasos >= 1 && totalCasos <= 100) && (habitaciones >= 2 && habitaciones <= 40)
-				&& (conexionesEntreHabitaciones >= 1 && conexionesEntreHabitaciones <= 20)) {
-			// System.out.println("datos correctos TRUE");
-			return true;
-		} else {
-			// System.out.println("datos incorrectos FALSE");
-			return false;
-		}
-	}
-
-	private static int comprobarPerdidoVictoria(int habitacionesTotal, List<Integer> pasos, ArrayList salida) {
+	private static void comprobarPerdidoVictoria(int habitacionesTotal, List<Integer> pasos, ArrayList salida) {
 		int ultimaHab = 0;
 		for (int i = 0; i < pasos.size(); i++) {
 			if (pasos.get(i) > ultimaHab) {
 				ultimaHab = pasos.get(i);
 			}
 		}
+		// Si la ultima habitacion que pisas coincide con el numero total de
+		// habitaciones que hay, ganas, si no, ha perdido
 		if (ultimaHab == habitacionesTotal) {
 			salida.add("VICTORIA");
 		} else {
 			salida.add("PERDIDO");
 		}
-		return 0;
 	}
 
 	public static int comprobarGameOver(int[][] habitacionesConectadas, List<Integer> pasos, ArrayList salida) {
@@ -496,7 +452,7 @@ public class Programame {
 		// Pierdes si pasas entre 2 habs que no estan conectadas
 		int habitacionesPasadas[] = new int[pasos.size()];
 		// Hago tantos int n1, n2 y asi como pasos.size(), y cargo cada n1 n2 con el
-		// contenido de pasos.size().get(elQueSea)
+		// contenido de pasos.size().get(el que sea)
 		for (int i = 0; i < pasos.size(); i++) {
 			habitacionesPasadas[i] = pasos.get(i);
 		}
@@ -504,6 +460,9 @@ public class Programame {
 		if (habitacionesPasadas.length - 1 == 0) { // Si solo hay 1 paso
 			int hab1 = 1;
 			int hab2 = habitacionesPasadas[0];
+			// Recorro las habitaciones que hay conectadas y compruebo que los pasos que doy
+			// coinciden con dos habitaciones que esten conectadas, si coincide es que hay
+			// conexion
 			for (int j = 0; j < habitacionesConectadas.length; j++) {
 				if ((habitacionesConectadas[j][0] == hab1 && habitacionesConectadas[j][1] == hab2)
 						|| (habitacionesConectadas[j][1] == hab1 && habitacionesConectadas[j][0] == hab2)) {
@@ -511,15 +470,14 @@ public class Programame {
 				}
 			}
 		} else if (habitacionesPasadas.length - 1 > 0) {
-			// Si hay más de 1 paso (hago comprobacion de que no esta vacio)
+			// Si hay más de 1 paso
+			// Lo mismo de antes pero en un for con tantas iteraciones como pasos
+			// habitaciones por las que hayas pasado
 			for (int i = 0; i < habitacionesPasadas.length; i++) {
 				if (i == 0) {
 					int hab1 = 1;
 					int hab2 = habitacionesPasadas[i];
 					for (int j = 0; j < habitacionesConectadas.length; j++) {
-						// System.out.println(habitacionesConectadas[j][0] + "-" +
-						// habitacionesConectadas[j][1]);
-						// System.out.println("H1-" + hab1 + " H2-" + hab2);
 						if ((habitacionesConectadas[j][0] == hab1 && habitacionesConectadas[j][1] == hab2)
 								|| (habitacionesConectadas[j][1] == hab1 && habitacionesConectadas[j][0] == hab2)) {
 							hayConexion++;
@@ -529,9 +487,6 @@ public class Programame {
 					int hab1 = habitacionesPasadas[i - 1];
 					int hab2 = habitacionesPasadas[i];
 					for (int j = 0; j < habitacionesConectadas.length; j++) {
-						// System.out.println(habitacionesConectadas[i][0] + "-" +
-						// habitacionesConectadas[i][1]);
-						// System.out.println(hab1 + "-" + hab2);
 						if ((habitacionesConectadas[j][0] == hab1 && habitacionesConectadas[j][1] == hab2)
 								|| (habitacionesConectadas[j][1] == hab1 && habitacionesConectadas[j][0] == hab2)) {
 							hayConexion++;
@@ -559,6 +514,7 @@ public class Programame {
 			int casoActual = 1;
 			int datoActual = 1;
 
+			// Recorro todos los casos que hay
 			while (casoActual <= totalCasos) {
 				int oxigenoMin = Integer.parseInt(entrada.get(datoActual));
 				datoActual++;
@@ -567,6 +523,7 @@ public class Programame {
 
 				List<String> datosNaves = new ArrayList<String>();
 
+				// En la lista de datosNaves meto el oxigeno-peso de cada nave
 				for (int i = 0; i < totalNaves; i++) {
 					datosNaves.add(entrada.get(datoActual));
 					datoActual++;
@@ -574,6 +531,7 @@ public class Programame {
 
 				System.out.println("Caso actual: " + casoActual + " Oxigeno necesario: " + oxigenoMin + " N� naves: "
 						+ totalNaves + " Oxigeno-Peso: " + datosNaves);
+				// Aqui compruebo que nave va antes que otra y la ordeno
 				comprobarNaves(oxigenoMin, datosNaves, casoActual, salida);
 
 				casoActual++;
@@ -585,9 +543,14 @@ public class Programame {
 
 	private static void comprobarNaves(int oxigenoMin, List<String> datosNaves, int casoActual, ArrayList salida) {
 		salida.add("Caso " + casoActual + ":");
+
+		// Ordeno la lista de naves segun oxigeno y peso
 		Collections.sort(datosNaves, new Comparator<String>() {
 			@Override
 			public int compare(String o1, String o2) {
+				// Voy comparando naves de dos en dos
+				// oxi1 y peso1 = oxigeno y peso de la primera nave
+				// oxi2 y peso2 = oxigeno y peso de la segunda nave
 				int oxi1 = Integer.valueOf(o1.split(" ")[0]);
 				int peso1 = Integer.valueOf(o1.split(" ")[1]);
 				int oxi2 = Integer.valueOf(o2.split(" ")[0]);
@@ -641,6 +604,8 @@ public class Programame {
 				return 0;
 			}
 		});
+		// Una vez los datos de las naves estan ordenados, los añado a la lista de
+		// salida
 		for (int i = 0; i < datosNaves.size(); i++) {
 			salida.add(datosNaves.get(i));
 		}
@@ -651,24 +616,27 @@ public class Programame {
 		int condiciones = 0;
 		int numNaves = 0;
 		int casoActual = 0;
-		int datoActual = 1; // Esto se que esta mal
+		int datoActual = 1;
+
+		// Compruebo el numero total de casos
 		if ((totalCasos >= 1 && totalCasos <= 3) && (entrada.size() >= (totalCasos * 2) + 1)) {
 			while (casoActual < totalCasos) {
 				condiciones++;
+
+				// Compruebo el oxigeno minimo que necesita cada nave
 				if (Integer.parseInt(entrada.get(datoActual)) >= 1
 						&& Integer.parseInt(entrada.get(datoActual)) <= 100000) {
 					datoActual++;
 					condiciones++;
+
 					// Comprobar el numero de naves
 					if (Integer.parseInt(entrada.get(datoActual)) >= 1
 							&& Integer.parseInt(entrada.get(datoActual)) <= 50000) {
-						// datoActual++;
 						condiciones++;
 						numNaves = Integer.parseInt(entrada.get(datoActual));
 
-						// System.out.println("cond antes " + condiciones);
+						// Por cada nave compruebo que los datos son correctos
 						for (int i = 0; i < numNaves; i++) {
-							// System.out.println(i);
 							datoActual++;
 							if (entrada.get(datoActual).contains(" ") && comprobarNaves(entrada.get(datoActual))) {
 								// Si contiene " " y las naves tienen bien los datos de oxigeno y peso
@@ -692,6 +660,8 @@ public class Programame {
 	}
 
 	private static boolean comprobarNaves(String string) {
+		// Separando por espacios, compruebo que los datos de oxigeno y peso estan
+		// dentro de los rangos
 		String aux[] = string.split(" ");
 		if ((Integer.parseInt(aux[0]) >= 1 && Integer.parseInt(aux[0]) <= 100000)
 				&& (Integer.parseInt(aux[1]) >= 1 && Integer.parseInt(aux[1]) <= 100000)) {

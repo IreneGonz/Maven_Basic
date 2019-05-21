@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
@@ -21,17 +21,15 @@ class ProgramameTest {
 	/**
 	 * Enunciado en ProblemaA.pdf
 	 */
-	// @Test
+	@Test
 	void testProblemaA() {
 		assertNotNull(ej.problemaA(Collections.EMPTY_LIST));
 		assertArrayEquals(new String[] { "-8", "5", "21", "ERROR", "-8" },
 				ej.problemaA(new ArrayList<>(Arrays.asList("5", "5 + -13", "10 / 2", "7 * 3", "3 / 0", "5 - 13")))
 						.toArray());
-
-		// Comprobar si paso numeros >10000 o <-10000
 	}
 
-	// @Test
+	@Test
 	void testProblemaATestLimite() {
 		// No espera que devuelva nada porque esta mal hecho el caso de prueba
 		assertArrayEquals(new String[] {},
@@ -39,20 +37,10 @@ class ProgramameTest {
 						.toArray());
 	}
 
-	// @Test // No se si funciona asi
-	void testProblemaALimite() {
-		try {
-			ej.problemaA(new ArrayList<>(Arrays.asList("3", "5 + -13", "10 / 2", "7 * 3", "3 / 0", "5 - 13")))
-					.toArray();
-			fail("Algo ha fallado");
-		} catch (Exception e) {
-		}
-	}
-
 	/**
 	 * Enunciado en ProblemaB.pdf
 	 */
-	// @Test
+	@Test
 	void testProblemaB() {
 		assertNotNull(ej.problemaB(Collections.EMPTY_LIST));
 		assertArrayEquals(new String[] { "OK", "ERROR", "OK", "ERROR", "ERROR", "ERROR" },
@@ -60,7 +48,7 @@ class ProgramameTest {
 						.toArray());
 	}
 
-	// @Test
+	@Test
 	void testProblemaBLimite() {
 		assertArrayEquals(new String[] {},
 				ej.problemaB(new ArrayList<>(Arrays.asList("10", "Polonio", "TT", "RADIO", "helio", "BeCeRRo", "AHA")))
@@ -73,11 +61,11 @@ class ProgramameTest {
 	/**
 	 * Enunciado en ProblemaC.pdf
 	 */
-	// @Test
+	@Test
 	void testProblemaC() {
 		assertNotNull(ej.problemaC(Collections.EMPTY_LIST));
 
-		// Esta puesto al reves
+		// El test esta puesto al reves
 		// assertArrayEquals(new String[] { "3", "100", "137", "7" },
 		// ej.problemaC(new ArrayList<>(Arrays.asList("4", "12", "0"))).toArray());
 
@@ -85,40 +73,45 @@ class ProgramameTest {
 				ej.problemaC(new ArrayList<>(Arrays.asList("3", "100", "137", "7"))).toArray());
 	}
 
-	// @Test
-	void testProblemaC2() {
-		assertArrayEquals(new String[] { "4", "12", "0" },
-				ej.problemaC(new ArrayList<>(Arrays.asList("3", "100", "137", "7"))).toArray());
-	}
-
-	// @Test
+	@Test
 	void testProblemaCLimite() {
 		assertArrayEquals(new String[] {},
-				ej.problemaC(new ArrayList<>(Arrays.asList("3", "0", "137", "7"))).toArray());
+				ej.problemaC(new ArrayList<>(Arrays.asList("101", "100", "137", "7"))).toArray());
+		assertArrayEquals(new String[] {},
+				ej.problemaC(new ArrayList<>(Arrays.asList("3", "20000000", "137", "7"))).toArray());
 	}
 
-	// @Test // No se si esto funciona asi
-	void testProblemaC3() {
-		try {
-			ej.problemaC(new ArrayList<>(Arrays.asList("4", "100", "137", "7"))).toArray();
-			fail("Algo ha fallado");
-		} catch (Exception e) {
-		}
+	@Test
+	void testProblemaCMalPasado() {
+		assertArrayEquals(new String[] {},
+				ej.problemaC(new ArrayList<>(Arrays.asList("3", "0", "137", "7"))).toArray());
 	}
 
 	/**
 	 * Enunciado en ProblemaD.pdf
 	 */
-	// @Test
+	@Test
 	void testProblemaD() {
 		assertNotNull(ej.problemaD(Collections.EMPTY_LIST));
-		// Arreglado el problema con el caso de prueba 12 en vez de 1 2
 		assertArrayEquals(new String[] { "VICTORIA", "GAMEOVER", "PERDIDO" }, ej.problemaD(new ArrayList<>(
 				Arrays.asList("3", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
 				.toArray());
 	}
 
-	// @Test
+	@Test
+	void testProblemaDLimite() {
+		assertArrayEquals(new String[] {}, ej.problemaD(new ArrayList<>(
+				Arrays.asList("1000", "2", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
+				.toArray());
+		assertArrayEquals(new String[] {}, ej.problemaD(new ArrayList<>(
+				Arrays.asList("3", "41", "1", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
+				.toArray());
+		assertArrayEquals(new String[] {}, ej.problemaD(new ArrayList<>(
+				Arrays.asList("3", "2", "21", "1 2", "2", "3", "1", "1 2", "2,3", "5", "2", "1 2", "3 2", "2,3")))
+				.toArray());
+	}
+
+	@Test
 	void testProblemaDCasosMalPasados() {
 		assertArrayEquals(new String[] {},
 				ej.problemaD(new ArrayList<>(
@@ -144,15 +137,15 @@ class ProgramameTest {
 
 	@Test
 	void testProblemaECasosLimite() {
-		assertArrayEquals(new String[] { "" }, ej.problemaE(new ArrayList<>(Arrays.asList("10", "1000000", "3",
+		assertArrayEquals(new String[] {}, ej.problemaE(new ArrayList<>(Arrays.asList("10", "1000000", "3",
 				"100 1000", "50 300", "50 5000", "200", "3", "100 1000", "60 300", "50 300"))).toArray());
-		assertArrayEquals(new String[] { "" }, ej.problemaE(new ArrayList<>(Arrays.asList("2", "1000001", "3",
+		assertArrayEquals(new String[] {}, ej.problemaE(new ArrayList<>(Arrays.asList("2", "1000001", "3",
 				"100 1000", "50 300", "50 5000", "200", "3", "100 1000", "60 300", "50 300"))).toArray());
-		assertArrayEquals(new String[] { "" }, ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "500000",
+		assertArrayEquals(new String[] {}, ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "500000",
 				"100 1000", "50 300", "50 5000", "200", "3", "100 1000", "60 300", "50 300"))).toArray());
-		assertArrayEquals(new String[] { "" }, ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000",
+		assertArrayEquals(new String[] {}, ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000",
 				"50 300", "50 5000", "200", "3", "1000000 1000", "60 300", "50 300"))).toArray());
-		assertArrayEquals(new String[] { "" }, ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000",
+		assertArrayEquals(new String[] {}, ej.problemaE(new ArrayList<>(Arrays.asList("2", "100", "3", "100 1000",
 				"50 300", "50 5000", "200", "3", "100 1000", "60 1000000", "50 300"))).toArray());
 	}
 
